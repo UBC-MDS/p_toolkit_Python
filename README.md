@@ -19,10 +19,10 @@ Created by</a></h5>
 <br>
 <h4 align="center">
 
-[![GitHub forks](https://img.shields.io/github/forks/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/network)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub issues](https://img.shields.io/github/issues/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/issues)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub stars](https://img.shields.io/github/stars/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/stargazers)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub license](https://img.shields.io/github/license/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/blob/master/LICENSE)
+[![GitHub forks](https://img.shields.io/github/forks/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/network)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub issues](https://img.shields.io/github/issues/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/issues)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub stars](https://img.shields.io/github/stars/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/stargazers)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub license](https://img.shields.io/github/license/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/blob/master/LICENSE)
 </a></h4>
 
 
@@ -58,7 +58,7 @@ The following table gives a high level overview of the proposed functions in `p_
 |--------------|-----------------------------------------------------|----------------------------------|-------------------------------------------------------|
 | `p_methods`  | Bonferroni, BH summary of adjusted pvals            | df/vector, p-value column, alpha | DATAFRAME<br> variable, raw pval, adjusted pvals      |
 | `p_adjust`   | Correction method specific output                   | df/vector, p-value column, alpha | raw pval, adjusted pval, Significance, Critical value |
-| `p_plot`     | Summary plot comparing methods - sample from DSCI553 Lecture 2: <br> `par(mfrow=c(1,2))`<br>`plot(1:10, sort(p.ex1), ylim=c(0,1),`<br > `xlab="k",<br>'ylab=expression(p[(k)]))` <br> `abline(h=.05/10, col="blue"); abline(c(0,.05/10),col="red")`<br>`plot(1:10, sort(p.ex1), xlim=c(0,4.1),ylim=c(0,.04),`<br>`xlab="k", ylab=expression(p[(k)]))`<br>`abline(h=.05/10, col="blue"); abline(c(0,.05/10),col="red")`                      | `p_methods` dataframe                  | ![](doc/pictures/sample-p_plot.PNG)![](doc/pictures/sample-p_plot-zoom.PNG) |
+| `p_plot`     | Summary plot comparing methods (sample from DSCI553 Lecture 2)       | `p_methods` dataframe                  | ![](doc/pictures/sample-p_plot.PNG)![](doc/pictures/sample-p_plot-zoom.PNG) |
 | `p_qq`       | qq plot labeling per method the significant pvals   |      `p_methods` dataframe                                     |  ![](doc/pictures/sample-p_qq.PNG)![](doc/pictures/sample-p_qq-zoom.PNG) |
 | *`p_matrix`  | Confusion matrix with FDR (reverse of type I error) |         _TBD_                              |                             _TBD_                          |
 | *`p_summary` | Summary listing  FDR rate                           |        _TBD_                               |                                            _TBD_                |
@@ -68,7 +68,9 @@ The following table gives a high level overview of the proposed functions in `p_
 
 ## Install
 
-
+```python
+pip install p_toolkit
+```
 
 ## How To Use
 
