@@ -19,10 +19,10 @@ Created by</a></h5>
 <br>
 <h4 align="center">
 
-[![GitHub forks](https://img.shields.io/github/forks/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/network)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub issues](https://img.shields.io/github/issues/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/issues)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub stars](https://img.shields.io/github/stars/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/stargazers)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![GitHub license](https://img.shields.io/github/license/UBC-MDS/p_toolkit_R.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_R/blob/master/LICENSE)
+[![GitHub forks](https://img.shields.io/github/forks/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/network)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub issues](https://img.shields.io/github/issues/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/issues)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub stars](https://img.shields.io/github/stars/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/stargazers)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![GitHub license](https://img.shields.io/github/license/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/blob/master/LICENSE)
 </a></h4>
 
 
