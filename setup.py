@@ -1,3 +1,5 @@
+from distutils.core import setup
+
 setup(
     name='p_toolkit',
     version='v1.0',
