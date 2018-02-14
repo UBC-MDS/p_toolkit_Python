@@ -110,10 +110,10 @@ This function is part of the `statsmodels` library, a complete set of functions 
 
 ## License
 
-[MIT License](https://github.com/UBC-MDS/p_toolkit_R/blob/master/LICENSE)
+[MIT License](https://github.com/UBC-MDS/p_toolkit_Python/blob/master/LICENSE)
 
 Interested in contributing?
-See our [Contributing Guidelines](https://github.com/UBC-MDS/p_toolkit_R/blob/master/CONTRIBUTING.md) and [Code of Conduct](https://github.com/UBC-MDS/p_toolkit_R/blob/master/Conduct.md).
+See our [Contributing Guidelines](https://github.com/UBC-MDS/p_toolkit_Python/blob/master/CONTRIBUTING.md) and [Code of Conduct](https://github.com/UBC-MDS/p_toolkit_Python/blob/master/Conduct.md).
 
 ---
 <h6 align="center">
