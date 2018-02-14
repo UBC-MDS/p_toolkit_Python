@@ -68,7 +68,9 @@ The following table gives a high level overview of the proposed functions in `p_
 
 ## Install
 
-
+```python
+pip install p_toolkit
+```
 
 ## How To Use
 
