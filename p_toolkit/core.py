@@ -21,6 +21,16 @@ def p_adjust():
     pass
 
 def p_plot():
+    """
+    This function plots all the p-values in ascending order and compares them with two lines, one representing
+    the BH cutoff point and another one the Bonferroni cutoff.
+
+    Args:
+        - ad_object: the Pandas dataframe output from the p_methods function.
+
+    Returns:
+        - plot: a matplotlib object with the p-values and both cut-off lines.
+    """
     pass
 
 def p_qq():
