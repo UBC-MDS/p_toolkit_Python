@@ -44,7 +44,7 @@ def p_qq():
         - ad_object: the Pandas dataframe output from the p_methods function.
 
     Returns:
-        - plot: a matplotlib object with the qq plot. 
+        - plot: a matplotlib object with the qq plot.
     """
     pass
 

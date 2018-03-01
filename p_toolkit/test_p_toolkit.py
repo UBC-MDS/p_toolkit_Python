@@ -2,10 +2,6 @@ def p_methods():
     pass
 
 def p_adjust():
-    """
-    This function outputs 
-
-    """
     pass
 
 def p_plot():
