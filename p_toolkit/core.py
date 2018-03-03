@@ -78,12 +78,15 @@ def p_bh_helper():
     """
     pass
 
-def p_summary():
+def p_bonferroni_helper():
+    """
+    Applies Bonferroni correction to the original p-values
+
+    Args:
+        - pvals (int): original p-value column index from existing input dataframe
+        - alpha (int): significance level as a value between 0 and 1
+
+    Returns:
+        - vector: returns the Bonferroni adjusted p-value
+    """
     pass
-
-
-
-import pytest
-
-def test_p_methods():
-    assert
