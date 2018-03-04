@@ -4,6 +4,7 @@ import pytest
 import p_toolkit
 import numpy as np
 import pandas as pd
+import inspect
 
 ###Functionality tests
 
@@ -119,11 +120,34 @@ def test_p_methods():
 
 def test_p_qq():
     """
-    The purpose of this test is evaluating if the matplotlib object created has the correct layers compared to the required
+    The purpose of this test is evaluating if the matplotlib object created with p_qq has the correct layers compared to the required
     plot. The test will cover the same things we checked with R:
 
     - The output is a matplotlib object.
     - The axis labels are correct. In this case if the labels are "Observed -log(p)" and "Expected -log(p)".
     - The chart type used is correct. In this case, if it is a scatter plot combined with a line.
     - The series used for plotting are the correct ones. "theoretical_pvalues" and "theoretical_pvalues".
+
+    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
+    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
     """
+
+    fig = p_qq(X,y)
+    assert type(fig) == matplotlib.figure.Figure, "the object includes a matplotlib figure "
+
+def test_p_plot():
+    """
+    The purpose of this test is evaluating if the matplotlib object created with p_plot has the correct layers compared to the required
+    plot. The test will cover the same things we checked with R:
+
+    - The output is a matplotlib object.
+    - The axis labels are correct. In this case if the labels are "p(k)" and "k".
+    - The chart type used is correct. In this case, if it is a scatter plot combined with two lines.
+    - The series used for plotting are the correct ones. "pvalue" and "k".
+    
+    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
+    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
+    """
+
+    fig = p_plot(X,y)
+    assert type(fig) == matplotlib.figure.Figure, "the object includes a matplotlib figure "
