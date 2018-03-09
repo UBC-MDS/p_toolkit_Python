@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
 def p_methods():
     """
     A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and
@@ -51,6 +55,10 @@ def p_plot():
 
     m = len(data['p_value'])
     alpha = data['value'][0]
+
+    data = data.sort_values('p_value',ascending=True)
+    data['rank'] = np.arange(1,len(data['p_value'])+1)
+    data['critical_value'] = data['rank']*alpha/m
     pass
 
 def p_qq():
