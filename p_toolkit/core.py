@@ -91,6 +91,14 @@ def p_qq():
     data['rank'] = np.arange(1,len(data['p_value'])+1)
     data['log_exp'] = -np.log10(data['rank']/m)
 
+    fig = plt.clf()
+    plt.scatter(data['log_exp'],data['log_transf'],color='black')
+    plt.plot(data['log_exp'],data['log_exp'])
+    plt.title("QQ")
+    plt.xlabel("Expected -log10(p)")
+    plt.ylabel("Observed -log10(p)")
+    return fig
+
 def p_bh_helper():
     """
     Applies Benjamini-Hochberg (BH) correction to the original p-values
