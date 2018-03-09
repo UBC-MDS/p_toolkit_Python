@@ -43,7 +43,7 @@ def test_p_bonnferoni_helper():
 
     ###maximum return is 1
     assert p_bonferroni_helper([0.01, 0.7]) == [0.02,1], "test_p_bonnferoni_helper has max of 1"
-	
+
 	###formatting tests
 	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
 	# https://data-lessons.github.io/library-python/03-data-types-and-format/
@@ -84,14 +84,14 @@ def test_p_bonn():
 	assert data is dataFrame
 	assert BH_significant == type(numpy.bool_)
 	assert Bonf_significant == type(numpy.bool_)
-	 
+
 	###formatting tests
 	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
 	assert not data.empty
 	assert data is dataFrame
 	assert pvals == dtype(int32)
 	assert alpha == dtype(int32)
-	 
+
 ####p_adjust functionality
 def test_p_adjust():
     """
@@ -129,7 +129,7 @@ def test_p_adjust():
     ad = {"test":["test 1", "test 2"], "p_value": [0.07,0.2],"adjusted": [0.14, 0.2]}
     adf = pd.DataFrame(data =ad)
     assert p_adjust(data =df, method = "bh") == adf, "bh 2 value df under p_adjust"
-	
+
 	###formatting tests
 	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
 	assert not data.empty
@@ -174,7 +174,7 @@ def test_p_methods():
     ad = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "Bonnferoni_critical_value": [0.025,0.025],"Bonnferoni_reject" :[True,False],"BH_critical_value": [0.025,0.05], "BH_reject":[True, True] }
     adf = pd.DataFrame(data = ad)
     assert p_methods(data =df, column = "p_value", alpha =0.05) == adf, "p_methods 2 values dataframe "
-	
+
 	###formatting tests
 	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
 	assert not data.empty

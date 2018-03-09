@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
 def p_methods():
     """
     A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and
@@ -48,7 +52,23 @@ def p_plot():
     Returns:
         - plot: a matplotlib object with the p-values and both cut-off lines.
     """
-    pass
+
+    m = len(data['p_value'])
+    alpha = data['value'][0]
+
+    data = data.sort_values('p_value',ascending=True)
+    data['rank'] = np.arange(1,len(data['p_value'])+1)
+    data['critical_value'] = data['rank']*alpha/m
+
+    fig = plt.clf()
+    plt.scatter(data['rank'],data['p_value'],color='black')
+    plt.axhline(y=alpha,label='Bonferroni')
+    plt.plot(data['rank'],data['critical_value'],label='BH',color='red')
+    plt.legend()
+    plt.title("Bonferroni vs BH")
+    plt.xlabel("Rank")
+    plt.ylabel("p(k)")
+    return fig
 
 def p_qq():
     """
@@ -63,7 +83,21 @@ def p_qq():
     Returns:
         - plot: a matplotlib object with the qq plot.
     """
-    pass
+    m = len(data['p_value'])
+    alpha = data['value'][0]
+
+    data['log_transf'] = -np.log10(sample_df['p_value'])
+    data = data.sort_values('p_value',ascending=True)
+    data['rank'] = np.arange(1,len(data['p_value'])+1)
+    data['log_exp'] = -np.log10(data['rank']/m)
+
+    fig = plt.clf()
+    plt.scatter(data['log_exp'],data['log_transf'],color='black')
+    plt.plot(data['log_exp'],data['log_exp'])
+    plt.title("QQ")
+    plt.xlabel("Expected -log10(p)")
+    plt.ylabel("Observed -log10(p)")
+    return fig
 
 def p_bh_helper():
     """
@@ -78,25 +112,25 @@ def p_bh_helper():
     """
 	# initialize parameters
 	q = alpha
-	
+
 	# Sort p-values
 	p_values = np.sort(p_values)
 	n = len(p_values)
 	i = np.arange(1, n+1)
-	
+
 	# Adjusted p-values that must be below the significance level
-	adj_bh = p_values * n / rank	
-	
-	# Rank to handle equal p-values 
+	adj_bh = p_values * n / rank
+
+	# Rank to handle equal p-values
 	helper_df = pd.DataFrame(p_values)
 	rank = round(helper_df.rank(axis=0, method = 'min')[0])
- 
+
     bh_df = pd.DataFrame()
-	bh_df['index'] = i 
+	bh_df['index'] = i
 	bh_df['rank'] = rank
 	bh_df['p_value'] = p_values
 	bh_df['adjusted_pval'] = adj_bh
-	
+
 	return bh_df
 
 def p_bonferroni_helper():
@@ -112,10 +146,10 @@ def p_bonferroni_helper():
     """
 	# vector output
 	adj_bonf = alpha / pvals
-	
+
 	# dataframe output
 	bonf_df = pd.DataFrame()
 	bonf_df['p_value'] = p_values
 	bonf_df['adjusted_pval'] = adj_bonf
-	
+
 	return bonf_df
