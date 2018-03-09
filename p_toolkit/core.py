@@ -83,7 +83,13 @@ def p_qq():
     Returns:
         - plot: a matplotlib object with the qq plot.
     """
-    pass
+    m = len(data['p_value'])
+    alpha = data['value'][0]
+
+    data['log_transf'] = -np.log10(sample_df['p_value'])
+    data = data.sort_values('p_value',ascending=True)
+    data['rank'] = np.arange(1,len(data['p_value'])+1)
+    data['log_exp'] = -np.log10(data['rank']/m)
 
 def p_bh_helper():
     """
