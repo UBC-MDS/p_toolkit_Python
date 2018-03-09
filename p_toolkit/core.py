@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def p_methods():
+def p_methods(data, pv_index=0, alpha = 0.05):
     """
     A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and
     Benjamini-Hochberg (BH), adjusted significancelevel for Bonferroni and the critical value for BH
@@ -20,7 +20,36 @@ def p_methods():
             - bh_val (int): Benjamini-Hochberg (BH) critical value
             - BH_significant (bool): True if significant p-value or False if not
     """
-    pass
+    ####if it's a pd.dataframe, rename to col header
+    if isinstance(data, pd.DataFrame):
+        data.rename({pv_index: "p_value"})
+    ###or make a vector a pd.dataframe
+    else:
+        data = pd.DataFrame({"p_value": data})
+
+    ###set the size of the data
+    m = data.shape[0]
+
+    ###find the smallest p_value st. p<k*alpha/m (BH method):
+    ##set the rank, making ties the minimum
+    df =data.sort_values(by=['p_value'])
+    df["rank"]=round(df.rank(axis=0, method = 'min')["p_value"])
+    df["bh_value"] = alpha*df["rank"]/m
+    df_temp = df
+    df_temp["bh_sig"]= np.where(df_temp["p_value"] <= df_temp["bh_value"], True, False)
+    df_temp =df_temp[df_temp["bh_sig"]==True]
+
+    ###the maximum trrue value
+    max_true = max(df_temp["rank"])
+
+    ####Back to cool dataframe work!
+    df["bh_significant"]=np.where(df["rank"]<=max_true, True, False)
+    df["bonf_value"] = alpha/m
+    df["bonf_significant"] = np.where(df["p_value"]<=df["bonf_value"], True, False)
+    df = df.drop(['rank'], axis=1)
+    df = df.drop(['bh_sig'], axis=1)
+
+    return(df)
 
 def p_adjust():
     """
