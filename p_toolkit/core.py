@@ -59,7 +59,16 @@ def p_plot():
     data = data.sort_values('p_value',ascending=True)
     data['rank'] = np.arange(1,len(data['p_value'])+1)
     data['critical_value'] = data['rank']*alpha/m
-    pass
+
+    fig = plt.clf()
+    plt.scatter(data['rank'],data['p_value'],color='black')
+    plt.axhline(y=alpha,label='Bonferroni')
+    plt.plot(data['rank'],data['critical_value'],label='BH',color='red')
+    plt.legend()
+    plt.title("Bonferroni vs BH")
+    plt.xlabel("Rank")
+    plt.ylabel("p(k)")
+    return fig
 
 def p_qq():
     """
