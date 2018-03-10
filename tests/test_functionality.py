@@ -193,10 +193,9 @@ def test_p_methods():
     test = test[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
 
-	###formatting tests
-	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
-	# assert not data.empty
-	# assert data is dataFrame
+    # data is not empty
+    with pytest.raises(TypeError):
+        p_methods()
 
 
 ###Plotting tests
