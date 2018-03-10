@@ -6,13 +6,13 @@ import pytest
 
 import numpy as np
 import pandas as pd
-import inspect
+from inspect import getmembers, isfunction
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
 # print(sys.path)
 
-import core
+from core import *
 
 ###Functionality tests
 

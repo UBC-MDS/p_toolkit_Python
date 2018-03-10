@@ -20,6 +20,7 @@ def p_methods(data, pv_index=0, alpha = 0.05):
             - bh_val (int): Benjamini-Hochberg (BH) critical value
             - BH_significant (bool): True if significant p-value or False if not
     """
+
     ####if it's a pd.dataframe, rename to col header
     if isinstance(data, pd.DataFrame):
         data.rename({pv_index: "p_value"})
@@ -39,8 +40,8 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     df_temp["bh_sig"]= np.where(df_temp["p_value"] <= df_temp["bh_value"], True, False)
     df_temp =df_temp[df_temp["bh_sig"]==True]
 
-    ###the maximum trrue value
-    max_true = max(df_temp["rank"])
+    ###the maximum true value
+    max_true = np.maximum(df_temp["rank"])
 
     ####Back to cool dataframe work!
     df["bh_significant"]=np.where(df["rank"]<=max_true, True, False)
