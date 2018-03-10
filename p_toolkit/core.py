@@ -133,52 +133,52 @@ def p_bh_helper(p_values,alpha=0.05):
     Applies Benjamini-Hochberg (BH) correction to the original p-values
 
     Args:
-        - p_values (int): original p-value column index from existing input dataframe
-        - alpha (int): significance level or false discovery rate as a value between 0 and 1
+    - p_values (int): original p-value column index from existing input dataframe
+    - alpha (int): significance level or false discovery rate as a value between 0 and 1
 
     Returns:
-        - Vector: returns the Benjamini-Hochberg (BH) adjusted p-value
+    - Vector: returns the Benjamini-Hochberg (BH) adjusted p-value
     """
-	# initialize parameters
-	q = alpha
+    # initialize parameters
+    q = alpha
 
-	# Sort p-values
-	p_values = np.sort(p_values)
-	n = len(p_values)
-	i = np.arange(1, n+1)
+    #Sort p-values
+    p_values = np.sort(p_values)
+    n = len(p_values)
+    i = np.arange(1, n+1)
 
-	# Adjusted p-values that must be below the significance level
-	adj_bh = p_values * n / rank
+    # Adjusted p-values that must be below the significance level
+    adj_bh = p_values * n / rank
 
-	# Rank to handle equal p-values
-	helper_df = pd.DataFrame(p_values)
-	rank = round(helper_df.rank(axis=0, method = 'min')[0])
+    # Rank to handle equal p-values
+    helper_df = pd.DataFrame(p_values)
+    rank = round(helper_df.rank(axis=0, method = 'min')[0])
 
     bh_df = pd.DataFrame()
-	bh_df['index'] = i
-	bh_df['rank'] = rank
-	bh_df['p_value'] = p_values
-	bh_df['adjusted_pval'] = adj_bh
+    bh_df['index'] = i
+    bh_df['rank'] = rank
+    bh_df['p_value'] = p_values
+    bh_df['adjusted_pval'] = adj_bh
 
-	return bh_df
+    return bh_df
 
 def p_bonferroni_helper():
     """
     Applies Bonferroni correction to the original p-values
 
     Args:
-        - pvals (int): original p-value column index from existing input dataframe
-        - alpha (int): significance level as a value between 0 and 1
+    - pvals (int): original p-value column index from existing input dataframe
+    - alpha (int): significance level as a value between 0 and 1
 
     Returns:
-        - vector: returns the Bonferroni adjusted p-value
+    - vector: returns the Bonferroni adjusted p-value
     """
-	# vector output
-	adj_bonf = alpha / pvals
+    # vector output
+    adj_bonf = alpha / pvals
 
-	# dataframe output
-	bonf_df = pd.DataFrame()
-	bonf_df['p_value'] = p_values
-	bonf_df['adjusted_pval'] = adj_bonf
+    # dataframe output
+    bonf_df = pd.DataFrame()
+    bonf_df['p_value'] = p_values
+    bonf_df['adjusted_pval'] = adj_bonf
 
-	return bonf_df
+    return bonf_df
