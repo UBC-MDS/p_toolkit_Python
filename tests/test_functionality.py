@@ -6,6 +6,7 @@ import pytest
 
 import numpy as np
 import pandas as pd
+from pandas.util.testing import assert_frame_equal
 from inspect import getmembers, isfunction
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
@@ -141,13 +142,19 @@ def test_p_methods():
     The purpose of this test is evaluating the p_adjust with more real world data using Pandas dataframes under
     different environments.
     """
-    d = { "p_value": [0.07], "Bonnferoni_critical_value": [0.05],"Bonnferoni_reject" :[False],"BH_critical_value": [0.05], "BH_reject":[False] }
+    d = { "p_value": [0.07], "bonf_value": [0.05],"bonf_significant" :[False],"bh_value": [0.05], "bh_significant":[False] }
     df = pd.DataFrame(data = d)
-    assert p_methods(data =[0.07], alpha =0.05) == df, "p_methods 1 value vector, FALSE"
+    df = df[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =[0.07], alpha =0.05)
+    test = test[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(df), "p_methods 1 value vector, FALSE"
 
-    d = { "p_value": [0.01], "Bonnferoni_critical_value": [0.05],"Bonnferoni_reject" :[True],"BH_critical_value": [0.05], "BH_reject":[True] }
+    d = { "p_value": [0.01], "bonf_value": [0.05],"bonf_significant" :[True],"bh_value": [0.05], "bh_significant":[True] }
     df = pd.DataFrame(data = d)
-    assert p_methods(data =[0.01], alpha =0.05) == df, "p_methods 1 value vector, TRUE"
+    df = df[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =[0.01], alpha =0.05)
+    test = test[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(df), "p_methods 1 value vector, TRUE"
 
 
     d = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "Bonnferoni_critical_value": [0.025,0.025],"Bonnferoni_reject" :[True,False],"BH_critical_value": [0.025,0.05], "BH_reject":[True, True] }
