@@ -41,7 +41,7 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     df_temp =df_temp[df_temp["bh_sig"]==True]
 
     ###the maximum true value
-    max_true = np.maximum(df_temp["rank"])
+    max_true = max(df_temp["rank"])
 
     ####Back to cool dataframe work!
     df["bh_significant"]=np.where(df["rank"]<=max_true, True, False)
