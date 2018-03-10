@@ -157,9 +157,12 @@ def test_p_methods():
     assert test.equals(df), "p_methods 1 value vector, TRUE"
 
 
-    d = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "Bonnferoni_critical_value": [0.025,0.025],"Bonnferoni_reject" :[True,False],"BH_critical_value": [0.025,0.05], "BH_reject":[True, True] }
+    d = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "bonf_value": [0.025,0.025],"bonf_significant" :[True,False],"bh_value": [0.025,0.05], "bh_significant":[True, True] }
     df = pd.DataFrame(data = d)
-    assert p_methods(data =[0.01,0.03], alpha =0.05) == df, "p_methods 2 values vector "
+    df = df[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =[0.01,0.03], alpha =0.05)
+    test = test[['p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(df), "p_methods 2 values vector "
 
 
     ###dataframe tests
