@@ -1,3 +1,3 @@
 {
-  "tests/test_functionality.py": true
+  "tests/test_functionality.py::test_p_methods": true
 }
