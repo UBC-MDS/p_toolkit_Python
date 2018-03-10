@@ -168,21 +168,30 @@ def test_p_methods():
     ###dataframe tests
     d = {"Test":["test 1"], "p_value": [0.01] }
     df = pd.DataFrame(data = d)
-    ad = {"Test":["test 1"], "p_value": [0.01], "Bonnferoni_critical_value": [0.05],"Bonnferoni_reject" :[True],"BH_critical_value": [0.05], "BH_reject":[True] }
+    ad = {"Test":["test 1"], "p_value": [0.01], "bonf_value": [0.05],"bonf_significant" :[True],"bh_value": [0.05], "bh_significant":[True] }
     adf = pd.DataFrame(data = ad)
-    assert p_methods(data =df, column = "p_value", alpha =0.05) == adf, "p_methods 2 values dataframe "
+    adf = adf[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =df, pv_index = "p_value", alpha =0.05)
+    test = test[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(adf), "p_methods 2 values dataframe "
 
     d = {"Test":["test 1"], "p_value": [0.1] }
     df = pd.DataFrame(data = d)
-    ad = {"Test":["test 1"], "p_value": [0.1], "Bonnferoni_critical_value": [0.05],"Bonnferoni_reject" :[False],"BH_critical_value": [0.05], "BH_reject":[False] }
+    ad = {"Test":["test 1"], "p_value": [0.1], "bonf_value": [0.05],"bonf_significant" :[False],"bh_value": [0.05], "bh_significant":[False] }
     adf = pd.DataFrame(data = ad)
-    assert p_methods(data =df,column = "p_value", alpha =0.05) == adf, "p_methods 2 values dataframe "
+    adf = adf[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =df,pv_index = "p_value", alpha =0.05)
+    test = test[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(adf), "p_methods 2 values dataframe "
 
     d = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03] }
     df = pd.DataFrame(data = d)
-    ad = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "Bonnferoni_critical_value": [0.025,0.025],"Bonnferoni_reject" :[True,False],"BH_critical_value": [0.025,0.05], "BH_reject":[True, True] }
+    ad = {"Test":["test 1", "test 2"], "p_value": [0.01,0.03], "bonf_value": [0.025,0.025],"bonf_significant" :[True,False],"bh_value": [0.025,0.05], "bh_significant":[True, True] }
     adf = pd.DataFrame(data = ad)
-    assert p_methods(data =df, column = "p_value", alpha =0.05) == adf, "p_methods 2 values dataframe "
+    adf = adf[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    test =  p_methods(data =df, pv_index = "p_value", alpha =0.05)
+    test = test[['Test','p_value','bh_value','bh_significant','bonf_value','bonf_significant']]
+    assert test.equals(adf), "p_methods 2 values dataframe "
 
 	###formatting tests
 	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
