@@ -70,7 +70,7 @@ def p_adjust():
     """
     pass
 
-def p_plot():
+def p_plot(data):
     """
     This function plots all the p-values in ascending order and compares them with two lines, one representing
     the BH cutoff point and another one the Bonferroni cutoff.
@@ -99,7 +99,7 @@ def p_plot():
     plt.ylabel("p(k)")
     return fig
 
-def p_qq():
+def p_qq(data):
     """
     This function plots all the raw p-values and compares them with a theoretical uniform distribution using a
     qq plot. This plot is created with a negative log scale, letting
@@ -128,7 +128,7 @@ def p_qq():
     plt.ylabel("Observed -log10(p)")
     return fig
 
-def p_bh_helper():
+def p_bh_helper(p_values,alpha=0.05):
     """
     Applies Benjamini-Hochberg (BH) correction to the original p-values
 

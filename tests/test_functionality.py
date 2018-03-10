@@ -8,10 +8,9 @@ import numpy as np
 import pandas as pd
 import inspect
 
-sys.path.insert(0, os.path.abspath("../"))
-sys.path.insert(0, os.path.abspath("p_toolkit/"))
+sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
-print(sys.path)
+# print(sys.path)
 
 import core
 
@@ -47,10 +46,10 @@ def test_p_bonnferoni_helper():
 	###formatting tests
 	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
 	# https://data-lessons.github.io/library-python/03-data-types-and-format/
-	assert not data.empty
-	assert data is dataFrame
-	assert pvals == dtype(int32)
-	assert alpha == dtype(int32)
+	#assert not data.empty
+	#assert data is dataFrame
+	#assert pvals == dtype(int32)
+	# assert alpha == dtype(int32)
 
 
 def test_p_bonn():
@@ -71,26 +70,26 @@ def test_p_bonn():
 
     ### all valid probabilities
     with pytest.raises(ValueError):
-     p_bh_helper([-3])
-     p_bh_helper([-3, .05])
-     p_bh_helper([.05, -3])
-     p_bh_helper([8])
-     p_bh_helper([8, .05])
-     p_bh_helper([.05,8])
+        p_bh_helper([-3])
+        p_bh_helper([-3, .05])
+        p_bh_helper([.05, -3])
+        p_bh_helper([8])
+        p_bh_helper([8, .05])
+        p_bh_helper([.05,8])
 
-	###formatting tests
-	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
-	assert not data.empty
-	assert data is dataFrame
-	assert BH_significant == type(numpy.bool_)
-	assert Bonf_significant == type(numpy.bool_)
-
-	###formatting tests
-	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
-	assert not data.empty
-	assert data is dataFrame
-	assert pvals == dtype(int32)
-	assert alpha == dtype(int32)
+	# ###formatting tests
+	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
+	# assert not data.empty
+	# assert data is dataFrame
+	# assert BH_significant == type(numpy.bool_)
+	# assert Bonf_significant == type(numpy.bool_)
+    #
+	# ###formatting tests
+	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
+	# assert not data.empty
+	# assert data is dataFrame
+	# assert pvals == dtype(int32)
+	# assert alpha == dtype(int32)
 
 ####p_adjust functionality
 def test_p_adjust():
@@ -130,10 +129,10 @@ def test_p_adjust():
     adf = pd.DataFrame(data =ad)
     assert p_adjust(data =df, method = "bh") == adf, "bh 2 value df under p_adjust"
 
-	###formatting tests
-	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
-	assert not data.empty
-	assert data is dataFrame
+	# ###formatting tests
+	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
+	# assert not data.empty
+	# assert data is dataFrame
 
 
 
@@ -176,9 +175,9 @@ def test_p_methods():
     assert p_methods(data =df, column = "p_value", alpha =0.05) == adf, "p_methods 2 values dataframe "
 
 	###formatting tests
-	# https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
-	assert not data.empty
-	assert data is dataFrame
+	# # https://github.com/datalyze-solutions/pandas-qt/blob/master/tests/test_DataFrameModel.py
+	# assert not data.empty
+	# assert data is dataFrame
 
 
 ###Plotting tests
