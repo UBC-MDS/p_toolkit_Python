@@ -8,7 +8,6 @@ setup(
     license='MIT',
     description='A toolkit for adjusting and visualizing p values.',
     url = ['https://github.com/UBC-MDS/p_toolkit_Python'],
-    download_url = 'https://github.com/UBC-MDS/p_toolkit_Python/archive/3.3.tar.gz',
-    long_description=open('README.md').read(),
-    keywords = ['testing','multiple-testing','p-values']
+    download_url = 'https://github.com/UBC-MDS/p_toolkit_Python/archive/3.4.tar.gz',
+    long_description=open('README.md').read()
 )
