@@ -10,6 +10,5 @@ setup(
     url = ['https://github.com/UBC-MDS/p_toolkit_Python'],
     download_url = 'https://github.com/UBC-MDS/p_toolkit_Python/archive/3.3.tar.gz',
     long_description=open('README.md').read(),
-    keywords = ['testing','multiple-testing','p-values'],
-    install_requires=[]
+    keywords = ['testing','multiple-testing','p-values']
 )
