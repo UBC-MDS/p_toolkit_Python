@@ -71,12 +71,13 @@ The following table gives a high level overview of the proposed functions in `p_
 From the terminal, type:
 
 ```
-pip install p_toolkit
+pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master
 ```
 
 From the Python IDE, type
+
 ```
-import p_toolkit_Python
+from p_toolkit.core import *
 ```
 
 ## How To Use
