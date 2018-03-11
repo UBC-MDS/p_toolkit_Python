@@ -144,8 +144,14 @@ def test_p_qq():
     ## on a list. We will get deeper this week to solve this issue and add the test announced before.
     """
 
-    ##fig = p_qq(X,y)
-    ##assert type(fig) == matplotlib.figure.Figure, "the object includes a matplotlib figure "
+    # error string col index of dataframe contains character values
+    try:
+        err_str = {"p_value": ['str']}
+        p_adjust((err_str), 0, "bonf", 0.05)
+    except(TypeError):
+        assert True
+    else:
+        assert False
 
 
 def test_p_plot():
@@ -162,5 +168,11 @@ def test_p_plot():
     ## on a list. We will get deeper this week to solve this issue and add the test announced before.
     """
 
-    ##fig = p_plot(X,y)
-    ##assert type(fig) == matplotlib.figure.Figure, "the object includes a matplotlib figure "
+    # error string col index of dataframe contains character values
+    try:
+        err_str = {"p_value": ['str']}
+        p_adjust((err_str), 0, "bonf", 0.05)
+    except(TypeError):
+        assert True
+    else:
+        assert False

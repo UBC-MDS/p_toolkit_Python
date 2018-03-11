@@ -5,9 +5,10 @@ setup(
     version='v1.0',
     author='Amy Goldlist, Veronique Mulholland and Esteban Angel',
     packages=['p_toolkit'],
-    scripts=[],
     license='MIT',
     description='A toolkit for adjusting and visualizing p values.',
+    url = ['https://github.com/UBC-MDS/p_toolkit_Python'],
     long_description=open('README.md').read(),
+    keywords = ['testing','multiple-testing','p-values'],
     install_requires=[]
 )

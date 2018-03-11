@@ -8,17 +8,18 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     Benjamini-Hochberg (BH), adjusted significancelevel for Bonferroni and the critical value for BH
 
    Args:
-        - data (dataframe): dataframe containing at least a column of p-values to be adjusted
+        - data: dataframe or array containing at least a column of p-values to be adjusted
         - pv_index (int): original p-value column index from existing input dataframe
         - alpha (int): significance level as a value between 0 and 1
 
    Returns:
         Dataframe: appends to input dataframe both adjusted p-values and significance levels (Bonferroni and BH)
         in ascending raw p-value order.Includes following columns:
-            - bonf_val (int): Bonferroni adjusted significance level (same for all)
-            - Bonf_significant (bool): True if significant p-value or False if not
-            - bh_val (int): Benjamini-Hochberg (BH) critical value
-            - BH_significant (bool): True if significant p-value or False if not
+            - p_value: is the original raw p-value.
+            - bh_value: Benjamini-Hochberg (BH) critical value
+            - bH_significant (bool): True if significant p-value or False if not
+            - bonf_value: Bonferroni adjusted significance level (same for all)
+            - bonf_significant (bool): True if significant p-value or False if not
     """
 
     ####if it's a pd.dataframe, rename to col header
@@ -57,79 +58,78 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     return(df)
 
 
-def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):                                         
-    """                                                                                            
-    A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and   
+def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):
+    """
+    A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and
     Benjamini-Hochberg (BH), adjusted significancelevel for Bonferroni and the critical value for B
-                                                                                                   
-   Args:                                                                                           
-        - data (dataframe): dataframe containing at least a column of p-values to be adjusted      
-        - pv_index (int): original p-value column index from existing input dataframe              
-        - alpha (int): significance level as a value between 0 and 1                               
-                                                                                                   
-   Returns:                                                                                        
-        Dataframe: appends to input dataframe both adjusted p-values and significance levels (Bonfe
-        in ascending raw p-value order.Includes following columns:                                 
-            - bonf_val (int): Bonferroni adjusted significance level (same for all)                
-            - Bonf_significant (bool): True if significant p-value or False if not                 
-            - bh_val (int): Benjamini-Hochberg (BH) critical value                                 
-            - BH_significant (bool): True if significant p-value or False if not                   
-    """                                                                                            
-                                                                                                   
-    #     ####if it's a pd.dataframe, rename to col header                                         
-    #     if isinstance(data, pd.DataFrame):                                                       
-    #         data.rename({pv_index: "p_value"})                                                   
-    #         if np.issubdtype(data['p_value'].dtypes, np.number):                                 
-                                                                                                   
-    #     ###or make a vector a pd.dataframe                                                       
-    #     else:                                                                                    
-    #         data = pd.DataFrame({"p_value": data})  
-    
-    if isinstance(data, pd.DataFrame):                                                             
-        data.rename({pv_index: "p_value"})                                                         
-        ## error for non-numeric data frame column                                                 
-        if not (np.issubdtype(data['p_value'].dtypes, np.number)):                                 
-            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
-    else:                                                                                          
-        data = pd.DataFrame({"p_value": data})                                                     
-        # set the size of the data                                                                 
-                                                                                                   
-    m = data.shape[0]                                                                              
-                                                                                                   
-    # sort p-values                                                                                
-    df = data.sort_values(by=['p_value'])                                                          
-    df["rank"] = round(df.rank(axis=0, method='min')["p_value"])                                   
-    df["bh_value"] = alpha * df["rank"] / m                                                        
-                                                                                                   
-    ### generate final data frame                                                                  
-    df["bonf_pvalue"] = np.where(df['p_value'] * m < 1, df['p_value'] * m, 1)                      
-    df["bh_pvalue"] = df['p_value'] / df["rank"]  * m                                             
-                                                                                                   
-                                                                                                   
-    if method == 'bh' or method == 'fdr':                                                          
-        df["adjusted"] = df['p_value'] /  df["rank"] * m
-        return (df[['p_value', 'adjusted']])                                                       
-    if method == 'bonf' or method == 'bonferroni':                                                 
-        df["adjusted"] = df['p_value'] * m                                           
-        return (df[['p_value', 'adjusted']])                                                       
-    else:                                                                                          
-        raise ValueError("Method should be set as 'bonf' or 'bh' corrections")
-                            
 
-def p_plot(data):
+   Args:
+        - data: dataframe or array containing at least a column of p-values to be adjusted
+        - pv_index (int): original p-value column index from existing input dataframe
+        - method: adjustment method to use. Use 'bh' or 'fdr' for Benjamini-Hochberg (BH), and 'bonf' or 'bonferroni' for Bonferroni.
+        - alpha (int): significance level as a value between 0 and 1
+
+   Returns:
+        Dataframe: appends to input dataframe both adjusted p-values and significance levels (Bonfe
+        in ascending raw p-value order.Includes following columns:
+        - p_value: is the original raw p-value.
+        - adjusted: is the corrected p-value after the adjustment method used.
+    """
+
+    if isinstance(data, pd.DataFrame):
+        data.rename({pv_index: "p_value"})
+        ## error for non-numeric data frame column
+        if not (np.issubdtype(data['p_value'].dtypes, np.number)):
+            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
+    else:
+        data = pd.DataFrame({"p_value": data})
+        # set the size of the data
+
+    m = data.shape[0]
+
+    # sort p-values
+    df = data.sort_values(by=['p_value'])
+    df["rank"] = round(df.rank(axis=0, method='min')["p_value"])
+    df["bh_value"] = alpha * df["rank"] / m
+
+    ### generate final data frame
+    df["bonf_pvalue"] = np.where(df['p_value'] * m < 1, df['p_value'] * m, 1)
+    df["bh_pvalue"] = df['p_value'] / df["rank"]  * m
+
+
+    if method == 'bh' or method == 'fdr':
+        df["adjusted"] = df['p_value'] /  df["rank"] * m
+        return (df[['p_value', 'adjusted']])
+    if method == 'bonf' or method == 'bonferroni':
+        df["adjusted"] = df['p_value'] * m
+        return (df[['p_value', 'adjusted']])
+    else:
+        raise ValueError("Method should be set as 'bonf' or 'bh' corrections")
+
+
+def p_plot(data,pv_index=0,alpha=0.05):
     """
     This function plots all the p-values in ascending order and compares them with two lines, one representing
     the BH cutoff point and another one the Bonferroni cutoff.
 
     Args:
-        - ad_object: the Pandas dataframe output from the p_methods function.
+        - data: a Pandas dataframe or an array that contains the p-values that we want to adjust.
+        - pv_index: (only when the input is a pandas dataframe )this argument determines the column index that contains the p-values.
+        - alpha: is the signficance level for cutting off p-values.
 
     Returns:
         - plot: a matplotlib object with the p-values and both cut-off lines.
     """
+    ####if it's a pd.dataframe, rename to col header
+    if isinstance(data, pd.DataFrame):
+        data.rename({pv_index: "p_value"})
+        if not (np.issubdtype(data['p_value'].dtypes, np.number)):
+            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
+    ###or make a vector a pd.dataframe
+    else:
+        data = pd.DataFrame({"p_value": data})
 
     m = len(data['p_value'])
-    alpha = data['value'][0]
 
     data = data.sort_values('p_value',ascending=True)
     data['rank'] = np.arange(1,len(data['p_value'])+1)
@@ -145,7 +145,7 @@ def p_plot(data):
     plt.ylabel("p(k)")
     return fig
 
-def p_qq(data):
+def p_qq(data,pv_index=0,alpha=0.05):
     """
     This function plots all the raw p-values and compares them with a theoretical uniform distribution using a
     qq plot. This plot is created with a negative log scale, letting
@@ -153,19 +153,27 @@ def p_qq(data):
     are the ones that are significant.
 
     Args:
-        - ad_object: the Pandas dataframe output from the p_methods function.
+        - data: a Pandas dataframe or an array that contains the p-values that we want to adjust.
+        - pv_index: (only when the input is a pandas dataframe )this argument determines the column index that contains the p-values.
+        - alpha: is the signficance level for cutting off p-values.
 
     Returns:
-        - plot: a matplotlib object with the qq plot.
+        - plot: a matplotlib object with the p-values and both cut-off lines.
     """
+    ####if it's a pd.dataframe, rename to col header
+    if isinstance(data, pd.DataFrame):
+        data.rename({pv_index: "p_value"})
+        if not (np.issubdtype(data['p_value'].dtypes, np.number)):
+            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
+    ###or make a vector a pd.dataframe
+    else:
+        data = pd.DataFrame({"p_value": data})
     m = len(data['p_value'])
-    alpha = data['value'][0]
 
-    data['log_transf'] = -np.log10(sample_df['p_value'])
+    data['log_transf'] = -np.log10(data['p_value'])
     data = data.sort_values('p_value',ascending=True)
     data['rank'] = np.arange(1,len(data['p_value'])+1)
     data['log_exp'] = -np.log10(data['rank']/m)
-
     fig = plt.clf()
     plt.scatter(data['log_exp'],data['log_transf'],color='black')
     plt.plot(data['log_exp'],data['log_exp'])
@@ -173,37 +181,3 @@ def p_qq(data):
     plt.xlabel("Expected -log10(p)")
     plt.ylabel("Observed -log10(p)")
     return fig
-
-def p_bh_helper(p_values,alpha=0.05):
-    """
-    Applies Benjamini-Hochberg (BH) correction to the original p-values
-
-    Args:
-    - p_values (int): original p-value column index from existing input dataframe
-    - alpha (int): significance level or false discovery rate as a value between 0 and 1
-
-    Returns:
-    - Vector: returns the Benjamini-Hochberg (BH) adjusted p-value
-    """
-    # initialize parameters
-    q = alpha
-
-    #Sort p-values
-    p_values = np.sort(p_values)
-    n = len(p_values)
-    i = np.arange(1, n+1)
-
-    # Adjusted p-values that must be below the significance level
-    adj_bh = p_values * n / rank
-
-    # Rank to handle equal p-values
-    helper_df = pd.DataFrame(p_values)
-    rank = round(helper_df.rank(axis=0, method = 'min')[0])
-
-    bh_df = pd.DataFrame()
-    bh_df['index'] = i
-    bh_df['rank'] = rank
-    bh_df['p_value'] = p_values
-    bh_df['adjusted_pval'] = adj_bh
-
-    return bh_df
