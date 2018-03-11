@@ -68,13 +68,78 @@ The following table gives a high level overview of the proposed functions in `p_
 
 ## Install
 
-```python
+From the terminal, type:
+
+```
 pip install p_toolkit
+```
+
+From the Python IDE, type
+```
+import p_toolkit_Python
 ```
 
 ## How To Use
 
+All the commands in this section should be typed in the IDE console. `data` refers to either a dataframe or other array/vector format and `pv_index` is the column number if using a dataframe.
 
+### Generating Sample P-values
+Here are some lines for simulating a toy set of p-values adapted from [Thresholding with false discovery rate](https://matthew-brett.github.io/teaching/fdr.html):
+
+```
+# Generate samples
+def p_samples(N,loc=0, scale=1., N_signal = 0, seed = 12345 ):
+
+    np.random.seed(seed) # make it replicable
+
+    # Data from a random normal distribution
+    normal_distribution = sst.norm(loc=loc,scale=scale) #loc is the mean, scale is the variance.
+
+    N_noise = N - N_signal
+    # simulate low z scores
+    noise_z_values = np.random.normal (size=N_noise)
+    signal_z_values = np.random.normal (loc=-2.5, size=N_signal)
+    mixed_z_values = np.sort (np.concatenate ((noise_z_values, signal_z_values)))
+    mixed_p_values = normal_distribution.cdf (mixed_z_values)
+    return mixed_p_values
+
+p_values = p_samples(100, N_signal=20, seed=42)
+```
+
+### Generating a Summary
+
+Now let's take a look at the summary table with both Bonferroni and BH correction methods applied:
+
+```
+p_methods(data, pv_index=0, alpha = 0.05)
+```
+
+### Bonferroni `Bonf` Correction
+
+For those only interested in getting adjusted p-values rather than seeing the whole summary, type in either 'bonf' or 'bonferroni':
+
+```
+p_adjust(data, pv_index=0, method='bonf', alpha=0.05)
+```
+
+### Benjamini-Hochberg `BH` Correction
+
+And now for the BH correction, type in either 'bh' or 'fdr':
+
+```
+p_adjust(data, pv_index=0, method='bh', alpha=0.05)
+```
+### Plot the results
+
+A plot displaying the p-values and both Bonferroni and Benjamini-Hochberg method significance level lines:
+
+```
+p_plot(data)
+```
+A simple QQ-plot of the p-values:
+```
+p_qq(data,pv_index)
+```
 
 ## Credits
 
