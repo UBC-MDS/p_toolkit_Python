@@ -8,17 +8,18 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     Benjamini-Hochberg (BH), adjusted significancelevel for Bonferroni and the critical value for BH
 
    Args:
-        - data (dataframe): dataframe containing at least a column of p-values to be adjusted
+        - data: dataframe or array containing at least a column of p-values to be adjusted
         - pv_index (int): original p-value column index from existing input dataframe
         - alpha (int): significance level as a value between 0 and 1
 
    Returns:
         Dataframe: appends to input dataframe both adjusted p-values and significance levels (Bonferroni and BH)
         in ascending raw p-value order.Includes following columns:
-            - bonf_val (int): Bonferroni adjusted significance level (same for all)
-            - Bonf_significant (bool): True if significant p-value or False if not
-            - bh_val (int): Benjamini-Hochberg (BH) critical value
-            - BH_significant (bool): True if significant p-value or False if not
+            - p_value: is the original raw p-value.
+            - bh_value: Benjamini-Hochberg (BH) critical value
+            - bH_significant (bool): True if significant p-value or False if not
+            - bonf_value: Bonferroni adjusted significance level (same for all)
+            - bonf_significant (bool): True if significant p-value or False if not
     """
 
     ####if it's a pd.dataframe, rename to col header
