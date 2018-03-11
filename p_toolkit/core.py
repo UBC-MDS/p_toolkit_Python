@@ -130,6 +130,8 @@ def p_plot(data,pv_index=0,alpha=0.05):
     ####if it's a pd.dataframe, rename to col header
     if isinstance(data, pd.DataFrame):
         data.rename({pv_index: "p_value"})
+        if not (np.issubdtype(data['p_value'].dtypes, np.number)):
+            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
     ###or make a vector a pd.dataframe
     else:
         data = pd.DataFrame({"p_value": data})
@@ -166,11 +168,14 @@ def p_qq(data,pv_index=0,alpha=0.05):
     ####if it's a pd.dataframe, rename to col header
     if isinstance(data, pd.DataFrame):
         data.rename({pv_index: "p_value"})
+        if not (np.issubdtype(data['p_value'].dtypes, np.number)):
+            raise TypeError("Please ensure you have specified the column index of numeric p-values.")
     ###or make a vector a pd.dataframe
     else:
         data = pd.DataFrame({"p_value": data})
     m = len(data['p_value'])
-    data['log_transf'] = -np.log10(sample_df['p_value'])
+
+    data['log_transf'] = -np.log10(data['p_value'])
     data = data.sort_values('p_value',ascending=True)
     data['rank'] = np.arange(1,len(data['p_value'])+1)
     data['log_exp'] = -np.log10(data['rank']/m)
