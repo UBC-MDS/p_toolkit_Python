@@ -63,27 +63,17 @@ def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):
     Benjamini-Hochberg (BH), adjusted significancelevel for Bonferroni and the critical value for B
 
    Args:
-        - data (dataframe): dataframe containing at least a column of p-values to be adjusted
+        - data: dataframe or array containing at least a column of p-values to be adjusted
         - pv_index (int): original p-value column index from existing input dataframe
+        - method: adjustment method to use. Use 'bh' or 'fdr' for Benjamini-Hochberg (BH), and 'bonf' or 'bonferroni' for Bonferroni.
         - alpha (int): significance level as a value between 0 and 1
 
    Returns:
         Dataframe: appends to input dataframe both adjusted p-values and significance levels (Bonfe
         in ascending raw p-value order.Includes following columns:
-            - bonf_val (int): Bonferroni adjusted significance level (same for all)
-            - Bonf_significant (bool): True if significant p-value or False if not
-            - bh_val (int): Benjamini-Hochberg (BH) critical value
-            - BH_significant (bool): True if significant p-value or False if not
+        - p_value: is the original raw p-value.
+        - adjusted: is the corrected p-value after the adjustment method used.
     """
-
-    #     ####if it's a pd.dataframe, rename to col header
-    #     if isinstance(data, pd.DataFrame):
-    #         data.rename({pv_index: "p_value"})
-    #         if np.issubdtype(data['p_value'].dtypes, np.number):
-
-    #     ###or make a vector a pd.dataframe
-    #     else:
-    #         data = pd.DataFrame({"p_value": data})
 
     if isinstance(data, pd.DataFrame):
         data.rename({pv_index: "p_value"})
@@ -122,7 +112,9 @@ def p_plot(data,pv_index=0,alpha=0.05):
     the BH cutoff point and another one the Bonferroni cutoff.
 
     Args:
-        - ad_object: the Pandas dataframe output from the p_methods function.
+        - data: a Pandas dataframe or an array that contains the p-values that we want to adjust.
+        - pv_index: (only when the input is a pandas dataframe )this argument determines the column index that contains the p-values.
+        - alpha: is the signficance level for cutting off p-values.
 
     Returns:
         - plot: a matplotlib object with the p-values and both cut-off lines.
@@ -160,10 +152,12 @@ def p_qq(data,pv_index=0,alpha=0.05):
     are the ones that are significant.
 
     Args:
-        - ad_object: the Pandas dataframe output from the p_methods function.
+        - data: a Pandas dataframe or an array that contains the p-values that we want to adjust.
+        - pv_index: (only when the input is a pandas dataframe )this argument determines the column index that contains the p-values.
+        - alpha: is the signficance level for cutting off p-values.
 
     Returns:
-        - plot: a matplotlib object with the qq plot.
+        - plot: a matplotlib object with the p-values and both cut-off lines.
     """
     ####if it's a pd.dataframe, rename to col header
     if isinstance(data, pd.DataFrame):
@@ -186,37 +180,3 @@ def p_qq(data,pv_index=0,alpha=0.05):
     plt.xlabel("Expected -log10(p)")
     plt.ylabel("Observed -log10(p)")
     return fig
-
-def p_bh_helper(p_values,alpha=0.05):
-    """
-    Applies Benjamini-Hochberg (BH) correction to the original p-values
-
-    Args:
-    - p_values (int): original p-value column index from existing input dataframe
-    - alpha (int): significance level or false discovery rate as a value between 0 and 1
-
-    Returns:
-    - Vector: returns the Benjamini-Hochberg (BH) adjusted p-value
-    """
-    # initialize parameters
-    q = alpha
-
-    #Sort p-values
-    p_values = np.sort(p_values)
-    n = len(p_values)
-    i = np.arange(1, n+1)
-
-    # Adjusted p-values that must be below the significance level
-    adj_bh = p_values * n / rank
-
-    # Rank to handle equal p-values
-    helper_df = pd.DataFrame(p_values)
-    rank = round(helper_df.rank(axis=0, method = 'min')[0])
-
-    bh_df = pd.DataFrame()
-    bh_df['index'] = i
-    bh_df['rank'] = rank
-    bh_df['p_value'] = p_values
-    bh_df['adjusted_pval'] = adj_bh
-
-    return bh_df
