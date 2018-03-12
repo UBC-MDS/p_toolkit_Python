@@ -71,7 +71,7 @@ The following table gives a high level overview of the proposed functions in `p_
 From the terminal, type:
 
 ```
-pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master
+pip install git+https://github.com/UBC-MDS/p_toolkit_Python
 ```
 
 From the Python IDE, type
@@ -107,6 +107,18 @@ def p_samples(N,loc=0, scale=1., N_signal = 0, seed = 12345 ):
 p_values = p_samples(100, N_signal=20, seed=42)
 ```
 
+**Out:**
+
+|    |    p_values |
+|---:|------------:|
+|  0 | 3.69271e-05 |
+|  1 | 0.000468997 |
+|... | ...         |
+| 98 | 0.942856    |
+| 99 | 0.968007    |
+
+
+
 ### Generating a Summary
 
 Now let's take a look at the summary table with both Bonferroni and BH correction methods applied:
@@ -114,6 +126,56 @@ Now let's take a look at the summary table with both Bonferroni and BH correctio
 ```
 p_methods(data, pv_index=0, alpha = 0.05)
 ```
+
+
+**Out:**
+
+|    |     p_value |   adjusted |   bh_value | bh_significant   |   bonf_value | bonf_significant   |
+|---:|------------:|-----------:|-----------:|:-----------------|-------------:|:-------------------|
+|  0 | 3.69271e-05 | 0.00369271 |     0.0005 | True             |       0.0005 | True               |
+|  1 | 0.000468997 | 0.0234498  |     0.001  | True             |       0.0005 | True               |
+|... | ...         | ...        | ...        | ...              | ...          | ...                |
+| 98 | 0.942856    | 0.95238    |     0.0495 | False            |       0.0005 | False              |
+| 99 | 0.968007    | 0.968007   |     0.05   | False            |       0.0005 | False              |
+
+### Bonferroni `Bonf` Correction
+
+For those only interested in getting adjusted p-values rather than seeing the whole summary, type in either 'bonf' or 'bonferroni':
+
+```
+p_adjust(data, pv_index=0, method='bonf', alpha=0.05)
+```
+
+**Out:**
+
+|    |     p_value |    adjusted |
+|---:|------------|------------|
+|  0 | 3.69271e-05 |  0.00369271 |
+|  1 | 0.000468997 |  0.0468997  |
+|... | ...         | ...        |
+| 98 | 0.942856    | 94.2856     |
+| 99 | 0.968007    | 96.8007     |
+
+
+### Benjamini-Hochberg `BH` Correction
+
+And now for the BH correction, type in either 'bh' or 'fdr':
+
+```
+p_adjust(data, pv_index=0, method='bh', alpha=0.05)
+```
+
+**Out:**
+
+|    |     p_value |   adjusted |
+|---:|------------|-----------|
+|  0 | 3.69271e-05 | 0.00369271 |
+|  1 | 0.000468997 | 0.0234498  |
+|... | ...         | ...        |
+| 98 | 0.942856    | 0.95238    |
+| 99 | 0.968007    | 0.968007   |
+
+
 
 ### Bonferroni `Bonf` Correction
 
@@ -130,6 +192,7 @@ And now for the BH correction, type in either 'bh' or 'fdr':
 ```
 p_adjust(data, pv_index=0, method='bh', alpha=0.05)
 ```
+
 ### Plot the results
 
 A plot displaying the p-values and both Bonferroni and Benjamini-Hochberg method significance level lines:
