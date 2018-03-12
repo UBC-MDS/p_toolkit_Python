@@ -75,8 +75,9 @@ pip install git+https://github.com/UBC-MDS/p_toolkit_Python
 ```
 
 From the Python IDE, type
+
 ```
-import p_toolkit
+from p_toolkit.core import *
 ```
 
 ## How To Use
@@ -116,6 +117,8 @@ p_values = p_samples(100, N_signal=20, seed=42)
 | 98 | 0.942856    |
 | 99 | 0.968007    |
 
+
+
 ### Generating a Summary
 
 Now let's take a look at the summary table with both Bonferroni and BH correction methods applied:
@@ -123,6 +126,7 @@ Now let's take a look at the summary table with both Bonferroni and BH correctio
 ```
 p_methods(data, pv_index=0, alpha = 0.05)
 ```
+
 
 **Out:**
 
@@ -171,6 +175,23 @@ p_adjust(data, pv_index=0, method='bh', alpha=0.05)
 | 98 | 0.942856    | 0.95238    |
 | 99 | 0.968007    | 0.968007   |
 
+
+
+### Bonferroni `Bonf` Correction
+
+For those only interested in getting adjusted p-values rather than seeing the whole summary, type in either 'bonf' or 'bonferroni':
+
+```
+p_adjust(data, pv_index=0, method='bonf', alpha=0.05)
+```
+
+### Benjamini-Hochberg `BH` Correction
+
+And now for the BH correction, type in either 'bh' or 'fdr':
+
+```
+p_adjust(data, pv_index=0, method='bh', alpha=0.05)
+```
 
 ### Plot the results
 
