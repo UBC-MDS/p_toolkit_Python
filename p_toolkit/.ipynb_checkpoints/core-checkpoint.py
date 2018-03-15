@@ -2,6 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
+###exceptions
+class ProbabilityError(Exception):
+    """An error that indicates that all probabilities are not between 0 and 1."""
+
 def p_methods(data, pv_index=0, alpha = 0.05):
     """
     A summary dataframe with columns for the p-values, adjusted p-values for both Bonferroni and
