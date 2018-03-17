@@ -11,7 +11,6 @@ install:
    - pip install matplotlib
   - 'pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master'
   - 'pip install -U pytest'  
-  - 'pip install -r requirements.txt'
 # command to run tests
 script:
   - pytest
