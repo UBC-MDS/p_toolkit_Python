@@ -6,8 +6,6 @@ import pytest
 
 import numpy as np
 import pandas as pd
-from pandas.util.testing import assert_frame_equal
-from inspect import getmembers, isfunction
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
