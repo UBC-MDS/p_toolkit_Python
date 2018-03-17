@@ -112,10 +112,9 @@ def test_p_methods_errors_probabilities_greater_than_one():
     else:
         assert False
 
-def test_p_methods():
+def test_p_methods_1_value_vector_false_signficance():
     """
-    The purpose of this test is evaluating the p_adjust with more real world data using Pandas dataframes under
-    different environments.
+    Testing 1 value vector as input for p_methods with false significance.
     """
     d = {"p_value": [0.07], "bonf_value": [0.05], "bonf_significant": [False], "bh_value": [0.05],
          "bh_significant": [False]}
@@ -125,6 +124,11 @@ def test_p_methods():
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 1 value vector, FALSE"
 
+def test_p_methods_1_value_vector_true_signficance():
+    """
+    Testing 1 value vector as input for p_methods with true significance.
+    """
+
     d = {"p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
          "bh_significant": [True]}
     df = pd.DataFrame(data=d)
@@ -132,6 +136,11 @@ def test_p_methods():
     test = p_methods(data=[0.01], alpha=0.05)
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 1 value vector, TRUE"
+
+def test_p_methods_2_value_vector():
+    """
+    Testing 2 values vector as input for p_methods.
+    """
 
     d = {"Test": ["test 1", "test 2"], "p_value": [0.01, 0.03], "bonf_value": [0.025, 0.025],
          "bonf_significant": [True, False], "bh_value": [0.025, 0.05], "bh_significant": [True, True]}
@@ -141,26 +150,10 @@ def test_p_methods():
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 2 values vector "
 
-    ###dataframe tests
-    d = {"Test": ["test 1"], "p_value": [0.01]}
-    df = pd.DataFrame(data=d)
-    ad = {"Test": ["test 1"], "p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
-          "bh_significant": [True]}
-    adf = pd.DataFrame(data=ad)
-    adf = adf[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    test = p_methods(data=df, pv_index="p_value", alpha=0.05)
-    test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    assert test.equals(adf), "p_methods 2 values dataframe "
-
-    d = {"Test": ["test 1"], "p": [0.01]}
-    df = pd.DataFrame(data=d)
-    ad = {"Test": ["test 1"], "p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
-          "bh_significant": [True]}
-    adf = pd.DataFrame(data=ad)
-    adf = adf[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    test = p_methods(data=df, pv_index=1, alpha=0.05)
-    test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    assert test.equals(adf), "p_methods 2 values dataframe "
+def test_p_methods_1_value_dataframe_true_signficance():
+    """
+    Testing 1 values dataframe with true signficance.
+    """
 
     d = {"Test": ["test 1"], "p": [0.01]}
     df = pd.DataFrame(data=d)
@@ -172,6 +165,11 @@ def test_p_methods():
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
 
+def test_p_methods_1_value_dataframe_false_signficance():
+    """
+    Testing 1 values dataframe with false signficance.
+    """
+
     d = {"Test": ["test 1"], "p_value": [0.1]}
     df = pd.DataFrame(data=d)
     ad = {"Test": ["test 1"], "p_value": [0.1], "bonf_value": [0.05], "bonf_significant": [False], "bh_value": [0.05],
@@ -181,6 +179,11 @@ def test_p_methods():
     test = p_methods(data=df, pv_index="p_value", alpha=0.05)
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
+
+def test_p_methods_2_values_dataframe():
+    """
+    Testing 2 values dataframe.
+    """
 
     d = {"Test": ["test 1", "test 2"], "p_value": [0.01, 0.03]}
     df = pd.DataFrame(data=d)
