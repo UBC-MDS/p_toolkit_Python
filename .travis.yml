@@ -8,8 +8,8 @@ python:
 cache: pip3
 install:
   - 'pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master'
-  - 'pip install -U pytest'
-  - 'pip install --upgrade setuptools'
+  - 'pip install -U pytest'  
+  - 'pip install -r requirements.txt'
 # command to run tests
 script:
   - pytest
