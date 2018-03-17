@@ -6,6 +6,7 @@ import pytest
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
