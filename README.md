@@ -19,6 +19,8 @@ Created by</a></h5>
 <br>
 <h4 align="center">
 
+
+[![Travis](https://img.shields.io/travis/USER/REPO.svg?style=social)](https://travis-ci.org/UBC-MDS/ptoolkit.svg?branch=master)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![GitHub forks](https://img.shields.io/github/forks/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/network)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![GitHub issues](https://img.shields.io/github/issues/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/issues)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![GitHub stars](https://img.shields.io/github/stars/UBC-MDS/p_toolkit_Python.svg?style=social)](https://github.com/UBC-MDS/p_toolkit_Python/stargazers)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
