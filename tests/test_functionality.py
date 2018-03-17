@@ -88,6 +88,10 @@ def test_p_methods_errors_probabilities_greater_than_one():
     else:
         assert False
 
+def test_p_methods_errors_probabilities_less_than_zero():
+    """
+    Testing for errors with invalid probabilities less than zero.
+    """
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
         p_methods((err_str), 0, 0.01)
@@ -95,6 +99,11 @@ def test_p_methods_errors_probabilities_greater_than_one():
         assert True
     else:
         assert False
+
+def test_p_methods_errors_alpha_less_than_zero():
+    """
+    Testing for errors with invalid alpha less than zero.
+    """
 
     try:
         err_str = {"p_value": [0.5,.3,.02]}
@@ -104,6 +113,10 @@ def test_p_methods_errors_probabilities_greater_than_one():
     else:
         assert False
 
+def test_p_methods_errors_alpha_greater_than_one():
+    """
+    Testing for errors with invalid alpha greater than one.
+    """
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_methods((err_str), 0, 3)
