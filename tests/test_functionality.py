@@ -16,17 +16,16 @@ from core import *
 # p_adjust tests
 # -----------------------------------------------------------------------------
 
-def test_p_qq_errors_probabilities_greater_than_one():
+def test_p_adjust_wrong_method_string():
     """
     Testing for entering an invalid string as a method.
     """
 
     try:
-         d = {"p_value": [0.07], "adjusted": [0.07]}
+        d = [0.02,0.3]
         df = pd.DataFrame(data=d)
-        err_str = "bonferronu"
-        p_adjust(df, 0, method=err_str, 0.01)
-    except(TypeError):
+        p_adjust(data=df,  pv_index=0, method='bonferrro', alpha=0.05)
+    except(ValueError):
         assert True
     else:
         assert False
