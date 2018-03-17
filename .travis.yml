@@ -7,8 +7,8 @@ python:
 # command to install dependencies
 cache: pip3
 install:
-   - pip install pandas
-   - pip install matplotlib
+  - 'pip install pandas'
+  - 'pip install matplotlib'
   - 'pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master'
   - 'pip install -U pytest'  
 # command to run tests
