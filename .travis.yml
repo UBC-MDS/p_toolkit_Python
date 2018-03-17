@@ -1,11 +1,15 @@
 language: python
 python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
   - "3.6"
 # command to install dependencies
 cache: pip3
 install:
   - 'pip install git+https://github.com/UBC-MDS/p_toolkit_Python.git@master'
   - 'pip install -U pytest'
+  - 'pip install --upgrade setuptools'
 # command to run tests
 script:
   - pytest
