@@ -9,8 +9,6 @@ import pandas as pd
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
-# print(sys.path)
-
 from core import *
 
 
@@ -40,8 +38,6 @@ def test_p_adjust():
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07, 0.2], method="bh")), "p_adjust 2 values vector value for bh"
-
-
 
     # error string col index of dataframe contains character values
     try:
@@ -225,14 +221,6 @@ def test_p_qq_errors():
 
 def test_p_qq():
     """
-    The purpose of this test is evaluating if the matplotlib object created with p_qq has the correct layers compared to the required
-    plot. The test will cover the same things we checked with R:
-
-    - The output is a matplotlib object.
-    - The axis labels are correct. In this case if the labels are "Observed -log(p)" and "Expected -log(p)".
-    - The chart type used is correct. In this case, if it is a scatter plot combined with a line.
-    - The series used for plotting are the correct ones. "theoretical_pvalues" and "theoretical_pvalues".
-
     ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
     ## on a list. We will get deeper this week to solve this issue and add the test announced before.
     """
