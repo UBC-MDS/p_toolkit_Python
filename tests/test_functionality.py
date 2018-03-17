@@ -6,7 +6,7 @@ import pytest
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
@@ -343,24 +343,24 @@ def test_p_plot_errors_alpha_greater_than_one():
 # Integration tests
 # -----------------------------------------------------------------------------
 
-def test_p_plot_integration_test():
-    """
-    Integration test using the p_plot function with p_methods as input.
-    """
-    try:
-        p_plot(p_methods(list(np.linspace(0.01,1,30))))
-    except(SyntaxError):
-        assert False
-    else:
-        assert True
-
-def test_p_qq_integration_test():
-    """
-    Integration test using the p_qq function with p_methods as input.
-    """
-    try:
-        p_qq(p_methods(list(np.linspace(0.01,1,30))))
-    except(SyntaxError):
-        assert False
-    else:
-        assert True
+# def test_p_plot_integration_test():
+#     """
+#     Integration test using the p_plot function with p_methods as input.
+#     """
+#     try:
+#         p_plot(p_methods(list(np.linspace(0.01,1,30))))
+#     except(SyntaxError):
+#         assert False
+#     else:
+#         assert True
+#
+# def test_p_qq_integration_test():
+#     """
+#     Integration test using the p_qq function with p_methods as input.
+#     """
+#     try:
+#         p_qq(p_methods(list(np.linspace(0.01,1,30))))
+#     except(SyntaxError):
+#         assert False
+#     else:
+#         assert True
