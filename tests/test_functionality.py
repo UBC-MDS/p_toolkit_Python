@@ -6,44 +6,62 @@ import pytest
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
-
-# print(sys.path)
 
 from core import *
 
 
-###Functionality tests
+# -----------------------------------------------------------------------------
+# p_adjust tests
+# -----------------------------------------------------------------------------
 
-###p_adjust functionality
-def test_p_adjust():
+def test_p_adjust_vector_1_value_bonf():
     """
-    The purpose of this test is evaluating the p_adjust with more real world data using Pandas dataframes under
-    different environments.
+    Testing p_adjust with a vector of 1 value and using bonferroni method.
     """
 
-    ##basic vector functionality"
     d = {"p_value": [0.07], "adjusted": [0.07]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07], method="bonf")), "p_adjust 1 values vector for bonferoni"
+
+def test_p_adjust_vector_1_value_bh():
+    """
+    Testing p_adjust with a vector of 1 value and using bh method.
+    """
+
+    d = {"p_value": [0.07], "adjusted": [0.07]}
+    df = pd.DataFrame(data=d)
+    df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07], method="bh")), "p_adjust 1 values vector for bh"
 
+def test_p_adjust_vector_2_values_bonf():
+    """
+    Testing p_adjust with a vector of 2 values and using bonferroni method.
+    """
 
     d = {"p_value": [0.07, 0.2], "adjusted": [0.14, 0.4]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07, 0.2], method="bonf")), "p_adjust 2 values vector for bonferoni"
 
+def test_p_adjust_vector_2_values_bh():
+    """
+    Testing p_adjust with a vector of 2 values and using bh method.
+    """
+
     d = {"p_value": [0.07, 0.2], "adjusted": [0.14, 0.2]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07, 0.2], method="bh")), "p_adjust 2 values vector value for bh"
 
+def test_p_adjust_character_col_index():
+    """
+    Testing for error string when col index of dataframe contains character values
+    """
 
-
-    # error string col index of dataframe contains character values
     try:
         err_str = {"p_value": ['str']}
         p_adjust((err_str), 0, "bonf", 0.05)
@@ -52,10 +70,11 @@ def test_p_adjust():
     else:
         assert False
 
-def test_p_adjust_errors():
+def test_p_adjust_errors_probabilities_greater_than_one():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with invalid probabilities greater than one
     """
+
     try:
         err_str = {"p_value": [0.5,3,.02]}
         p_adjust((err_str), 0, "bonf", 0.05)
@@ -64,18 +83,28 @@ def test_p_adjust_errors():
     else:
         assert False
 
-        try:
-            err_str = {"p_value": [0.5,.3,-.02]}
-            p_adjust((err_str), 0, "bh", 0.05)
-        except(TypeError):
-            assert True
-        else:
-            assert False
+def test_p_adjust_errors_probabilities_less_than_zero():
+    """
+    Testing for errors with invalid negative probabilities
+    """
 
-def test_p_methods_errors():
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_adjust((err_str), 0, "bh", 0.05)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+# -----------------------------------------------------------------------------
+# p_methods tests
+# -----------------------------------------------------------------------------
+
+def test_p_methods_errors_probabilities_greater_than_one():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with invalid probabilities greater than one.
     """
+
     try:
         err_str = {"p_value": [0.5,3,.02]}
         p_methods((err_str), 0, 0.01)
@@ -83,6 +112,11 @@ def test_p_methods_errors():
         assert True
     else:
         assert False
+
+def test_p_methods_errors_probabilities_less_than_zero():
+    """
+    Testing for errors with invalid probabilities less than zero.
+    """
 
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
@@ -92,6 +126,11 @@ def test_p_methods_errors():
     else:
         assert False
 
+def test_p_methods_errors_alpha_less_than_zero():
+    """
+    Testing for errors with invalid alpha less than zero.
+    """
+
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_methods((err_str), 0, -.01)
@@ -99,6 +138,11 @@ def test_p_methods_errors():
         assert True
     else:
         assert False
+
+def test_p_methods_errors_alpha_greater_than_one():
+    """
+    Testing for errors with invalid alpha greater than one.
+    """
 
     try:
         err_str = {"p_value": [0.5,.3,.02]}
@@ -108,11 +152,11 @@ def test_p_methods_errors():
     else:
         assert False
 
-def test_p_methods():
+def test_p_methods_1_value_vector_false_signficance():
     """
-    The purpose of this test is evaluating the p_adjust with more real world data using Pandas dataframes under
-    different environments.
+    Testing 1 value vector as input for p_methods with false significance.
     """
+
     d = {"p_value": [0.07], "bonf_value": [0.05], "bonf_significant": [False], "bh_value": [0.05],
          "bh_significant": [False]}
     df = pd.DataFrame(data=d)
@@ -120,6 +164,11 @@ def test_p_methods():
     test = p_methods(data=[0.07], alpha=0.05)
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 1 value vector, FALSE"
+
+def test_p_methods_1_value_vector_true_signficance():
+    """
+    Testing 1 value vector as input for p_methods with true significance.
+    """
 
     d = {"p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
          "bh_significant": [True]}
@@ -129,6 +178,11 @@ def test_p_methods():
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 1 value vector, TRUE"
 
+def test_p_methods_2_value_vector():
+    """
+    Testing 2 values vector as input for p_methods.
+    """
+
     d = {"Test": ["test 1", "test 2"], "p_value": [0.01, 0.03], "bonf_value": [0.025, 0.025],
          "bonf_significant": [True, False], "bh_value": [0.025, 0.05], "bh_significant": [True, True]}
     df = pd.DataFrame(data=d)
@@ -137,26 +191,10 @@ def test_p_methods():
     test = test[['p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(df), "p_methods 2 values vector "
 
-    ###dataframe tests
-    d = {"Test": ["test 1"], "p_value": [0.01]}
-    df = pd.DataFrame(data=d)
-    ad = {"Test": ["test 1"], "p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
-          "bh_significant": [True]}
-    adf = pd.DataFrame(data=ad)
-    adf = adf[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    test = p_methods(data=df, pv_index="p_value", alpha=0.05)
-    test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    assert test.equals(adf), "p_methods 2 values dataframe "
-
-    d = {"Test": ["test 1"], "p": [0.01]}
-    df = pd.DataFrame(data=d)
-    ad = {"Test": ["test 1"], "p_value": [0.01], "bonf_value": [0.05], "bonf_significant": [True], "bh_value": [0.05],
-          "bh_significant": [True]}
-    adf = pd.DataFrame(data=ad)
-    adf = adf[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    test = p_methods(data=df, pv_index=1, alpha=0.05)
-    test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
-    assert test.equals(adf), "p_methods 2 values dataframe "
+def test_p_methods_1_value_dataframe_true_signficance():
+    """
+    Testing 1 values dataframe with true signficance.
+    """
 
     d = {"Test": ["test 1"], "p": [0.01]}
     df = pd.DataFrame(data=d)
@@ -168,6 +206,11 @@ def test_p_methods():
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
 
+def test_p_methods_1_value_dataframe_false_signficance():
+    """
+    Testing 1 values dataframe with false signficance.
+    """
+
     d = {"Test": ["test 1"], "p_value": [0.1]}
     df = pd.DataFrame(data=d)
     ad = {"Test": ["test 1"], "p_value": [0.1], "bonf_value": [0.05], "bonf_significant": [False], "bh_value": [0.05],
@@ -177,6 +220,11 @@ def test_p_methods():
     test = p_methods(data=df, pv_index="p_value", alpha=0.05)
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
+
+def test_p_methods_2_values_dataframe():
+    """
+    Testing 2 values dataframe.
+    """
 
     d = {"Test": ["test 1", "test 2"], "p_value": [0.01, 0.03]}
     df = pd.DataFrame(data=d)
@@ -188,53 +236,20 @@ def test_p_methods():
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
 
-    # data is not empty
+def test_p_methods_empty_data():
+    """
+    Testing not empty data.
+    """
     with pytest.raises(TypeError):
         p_methods()
 
-    # error string col index of dataframe contains character values
-    try:
-        err_str = {"p_value": ['str']}
-        p_adjust((err_str), 0, "bonf", 0.05)
-    except(TypeError):
-        assert True
-    else:
-        assert False
+# -----------------------------------------------------------------------------
+# p_qq tests
+# -----------------------------------------------------------------------------
 
-##Plotting tests
-
-def test_p_qq_errors():
+def test_p_qq_errors_probabilities_less_than_zero():
     """
-    Testing for errors with invalid probabilities
-    """
-    try:
-        err_str = {"p_value": [0.5,3,.02]}
-        p_qq((err_str), 0, 0.01)
-    except(TypeError):
-        assert True
-    else:
-        assert False
-
-    try:
-        err_str = {"p_value": [0.5,.3,-.02]}
-        p_qq((err_str), 0, 0.01)
-    except(TypeError):
-        assert True
-    else:
-        assert False
-
-def test_p_qq():
-    """
-    The purpose of this test is evaluating if the matplotlib object created with p_qq has the correct layers compared to the required
-    plot. The test will cover the same things we checked with R:
-
-    - The output is a matplotlib object.
-    - The axis labels are correct. In this case if the labels are "Observed -log(p)" and "Expected -log(p)".
-    - The chart type used is correct. In this case, if it is a scatter plot combined with a line.
-    - The series used for plotting are the correct ones. "theoretical_pvalues" and "theoretical_pvalues".
-
-    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
-    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
+    Testing for errors with probabilities less than zero.
     """
 
     # error string col index of dataframe contains character values
@@ -246,9 +261,38 @@ def test_p_qq():
     else:
         assert False
 
-def test_p_plot_errors():
+def test_p_qq_errors_probabilities_less_than_zero():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with probabilities less than zero.
+    """
+    try:
+        err_str = {"p_value": [0.5,3,.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+def test_p_qq_errors_probabilities_greater_than_one():
+    """
+    Testing for errors with probatilities greater than one.
+    """
+
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+# -----------------------------------------------------------------------------
+# p_plot tests
+# -----------------------------------------------------------------------------
+
+def test_p_plot_errors_probabilities_greater_than_one():
+    """
+    Testing for errors with invalid probabilities greater than one.
     """
     try:
         err_str = {"p_value": [0.5,3,.02]}
@@ -258,6 +302,11 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_probabilities_less_than_zero():
+    """
+    Testing for errors with invalid negative probabilities.
+    """
+
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
         p_plot((err_str), 0, 0.01)
@@ -266,6 +315,10 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_alpha_less_than_zero():
+    """
+    Testing for errors with invalid negative alpha.
+    """
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_plot((err_str), 0, -.01)
@@ -274,6 +327,10 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_alpha_greater_than_one():
+    """
+    Testing for errors with invalid alpha greater than one.
+    """
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_plot((err_str), 0, 3)
@@ -282,25 +339,28 @@ def test_p_plot_errors():
     else:
         assert False
 
-def test_p_plot():
+# -----------------------------------------------------------------------------
+# Integration tests
+# -----------------------------------------------------------------------------
+
+def test_p_plot_integration_test():
     """
-    The purpose of this test is evaluating if the matplotlib object created with p_plot has the correct layers compared to the required
-    plot. The test will cover the same things we checked with R:
-
-    - The output is a matplotlib object.
-    - The axis labels are correct. In this case if the labels are "p(k)" and "k".
-    - The chart type used is correct. In this case, if it is a scatter plot combined with two lines.
-    - The series used for plotting are the correct ones. "pvalue" and "k".
-
-    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
-    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
+    Integration test using the p_plot function with p_methods as input.
     """
-
-    # error string col index of dataframe contains character values
     try:
-        err_str = {"p_value": ['str']}
-        p_adjust((err_str), 0, "bonf", 0.05)
-    except(TypeError):
-        assert True
-    else:
+        p_plot(p_methods(list(np.linspace(0.01,1,30))))
+    except(SyntaxError):
         assert False
+    else:
+        assert True
+
+def test_p_qq_integration_test():
+    """
+    Integration test using the p_qq function with p_methods as input.
+    """
+    try:
+        p_qq(p_methods(list(np.linspace(0.01,1,30))))
+    except(SyntaxError):
+        assert False
+    else:
+        assert True
