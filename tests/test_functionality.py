@@ -262,15 +262,14 @@ def test_p_methods_empty_data():
 # p_qq tests
 # -----------------------------------------------------------------------------
 
-def test_p_qq_errors_probabilities_less_than_zero():
+def test_p_qq_error_p_value_strings():
     """
-    Testing for errors with probabilities less than zero.
+    Testing for errors with p_qq with strings in the p_values vector.
     """
 
-    # error string col index of dataframe contains character values
     try:
         err_str = {"p_value": ['str']}
-        p_adjust((err_str), 0, "bonf", 0.05)
+        p_qq((err_str), 0, "bonf", 0.05)
     except(TypeError):
         assert True
     else:
