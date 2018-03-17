@@ -16,7 +16,7 @@ from core import *
 # p_adjust tests
 # -----------------------------------------------------------------------------
 
-def test_p_qq_errors_probabilities_greater_than_one():
+def test_p_adjust_wrong_method_string():
     """
     Testing for entering an invalid string as a method.
     """
@@ -26,7 +26,7 @@ def test_p_qq_errors_probabilities_greater_than_one():
         df = pd.DataFrame(data=d)
         err_str = "bonferronu"
         p_adjust(df, 0, method=err_str, 0.01)
-    except(TypeError):
+    except(ValueError):
         assert True
     else:
         assert False
