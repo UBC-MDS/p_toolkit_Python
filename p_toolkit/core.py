@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -30,7 +30,7 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     #### Raise an error for an impossible alpha value
     if (alpha>= 1) or (alpha<= 0):
         raise ProbabilityError("alpha needs to be between 0 and 1!")
-        
+
     ####if it's a pd.dataframe, rename to col header
     if isinstance(data, pd.DataFrame):
         if isinstance(pv_index, int):
@@ -41,7 +41,7 @@ def p_methods(data, pv_index=0, alpha = 0.05):
         data = pd.DataFrame({"p_value": data})
 
     if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
-        raise ProbabilityError("One or more p-values is not between 0 and 1!")        
+        raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
     ###set the size of the data
     m = data.shape[0]
@@ -100,8 +100,8 @@ def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):
     else:
         data = pd.DataFrame({"p_value": data})
         # set the size of the data
-    
-    ##added an exception 
+
+    ##added an exception
     if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
@@ -150,10 +150,10 @@ def p_plot(data,pv_index=0,alpha=0.05):
     ###or make a vector a pd.dataframe
     else:
         data = pd.DataFrame({"p_value": data})
-        
+
     if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
-        
+
     m = len(data['p_value'])
 
     data = data.sort_values('p_value',ascending=True)
@@ -195,10 +195,10 @@ def p_qq(data,pv_index=0,alpha=0.05):
     ###or make a vector a pd.dataframe
     else:
         data = pd.DataFrame({"p_value": data})
-        
+
     if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
-        
+
     m = len(data['p_value'])
 
     data['log_transf'] = -np.log10(data['p_value'])
