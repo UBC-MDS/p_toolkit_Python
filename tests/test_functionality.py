@@ -5,7 +5,8 @@ import sys
 import pytest
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import matplotlib as plt
+plt.use('Agg')
 
 sys.path.insert(0, os.path.abspath("../p_toolkit"))
 
