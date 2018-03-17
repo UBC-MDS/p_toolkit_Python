@@ -192,7 +192,10 @@ def test_p_methods():
     test = test[['Test', 'p_value', 'bh_value', 'bh_significant', 'bonf_value', 'bonf_significant']]
     assert test.equals(adf), "p_methods 2 values dataframe "
 
-    # data is not empty
+def test_p_methods_empty_data():
+    """
+    Testing not empty data.
+    """
     with pytest.raises(TypeError):
         p_methods()
 
@@ -213,7 +216,6 @@ def test_p_qq_errors_probabilities_less_than_zero():
         assert True
     else:
         assert False
-
 
 def test_p_qq_errors_probabilities_less_than_zero():
     """
