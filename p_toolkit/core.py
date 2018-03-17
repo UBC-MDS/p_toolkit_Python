@@ -40,7 +40,7 @@ def p_methods(data, pv_index=0, alpha = 0.05):
     else:
         data = pd.DataFrame({"p_value": data})
 
-    if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
+    if (data["p_value"].max()> 1) or (data["p_value"].min()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
     ###set the size of the data
@@ -102,7 +102,7 @@ def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):
         # set the size of the data
 
     ##added an exception
-    if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
+    if (data["p_value"].max()> 1) or (data["p_value"].min()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
     m = data.shape[0]
@@ -147,11 +147,12 @@ def p_plot(data,pv_index=0,alpha=0.05):
         data =data.rename(columns ={pv_index: "p_value"})
         if not (np.issubdtype(data['p_value'].dtypes, np.number)):
             raise TypeError("Please ensure you have specified the column index of numeric p-values.")
+
     ###or make a vector a pd.dataframe
     else:
         data = pd.DataFrame({"p_value": data})
 
-    if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
+    if (data["p_value"].max()> 1) or (data["p_value"].min()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
     m = len(data['p_value'])
@@ -196,7 +197,7 @@ def p_qq(data,pv_index=0,alpha=0.05):
     else:
         data = pd.DataFrame({"p_value": data})
 
-    if (data["p_value"].max()> 1) or (data["p_value"].max()< 0):
+    if (data["p_value"].max()> 1) or (data["p_value"].min()< 0):
         raise ProbabilityError("One or more p-values is not between 0 and 1!")
 
     m = len(data['p_value'])

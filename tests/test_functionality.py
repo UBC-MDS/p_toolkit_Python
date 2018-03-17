@@ -48,9 +48,9 @@ def test_p_adjust():
     else:
         assert False
 
-def test_p_adjust_errors():
+def test_p_adjust_errors_probabilities_greater_than_one():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with invalid probabilities greater than one
     """
     try:
         err_str = {"p_value": [0.5,3,.02]}
@@ -60,17 +60,25 @@ def test_p_adjust_errors():
     else:
         assert False
 
-        try:
-            err_str = {"p_value": [0.5,.3,-.02]}
-            p_adjust((err_str), 0, "bh", 0.05)
-        except(TypeError):
-            assert True
-        else:
-            assert False
-
-def test_p_methods_errors():
+def test_p_adjust_errors_probabilities_less_than_zero():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with invalid negative probabilities
+    """
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_adjust((err_str), 0, "bh", 0.05)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+# -----------------------------------------------------------------------------
+# p_methods tests
+# -----------------------------------------------------------------------------
+
+def test_p_methods_errors_probabilities_greater_than_one():
+    """
+    Testing for errors with invalid probabilities greater than one.
     """
     try:
         err_str = {"p_value": [0.5,3,.02]}
@@ -188,41 +196,13 @@ def test_p_methods():
     with pytest.raises(TypeError):
         p_methods()
 
-    # error string col index of dataframe contains character values
-    try:
-        err_str = {"p_value": ['str']}
-        p_adjust((err_str), 0, "bonf", 0.05)
-    except(TypeError):
-        assert True
-    else:
-        assert False
+# -----------------------------------------------------------------------------
+# p_qq tests
+# -----------------------------------------------------------------------------
 
-##Plotting tests
-
-def test_p_qq_errors():
+def test_p_qq_errors_probabilities_less_than_zero():
     """
-    Testing for errors with invalid probabilities
-    """
-    try:
-        err_str = {"p_value": [0.5,3,.02]}
-        p_qq((err_str), 0, 0.01)
-    except(TypeError):
-        assert True
-    else:
-        assert False
-
-    try:
-        err_str = {"p_value": [0.5,.3,-.02]}
-        p_qq((err_str), 0, 0.01)
-    except(TypeError):
-        assert True
-    else:
-        assert False
-
-def test_p_qq():
-    """
-    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
-    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
+    Testing for errors with probabilities less than zero.
     """
 
     # error string col index of dataframe contains character values
@@ -234,9 +214,39 @@ def test_p_qq():
     else:
         assert False
 
-def test_p_plot_errors():
+
+def test_p_qq_errors_probabilities_less_than_zero():
     """
-    Testing for errors with invalid probabilities
+    Testing for errors with probabilities less than zero.
+    """
+    try:
+        err_str = {"p_value": [0.5,3,.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+def test_p_qq_errors_probabilities_greater_than_one():
+    """
+    Testing for errors with probatilities greater than one.
+    """
+
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+# -----------------------------------------------------------------------------
+# p_plot tests
+# -----------------------------------------------------------------------------
+
+def test_p_plot_errors_probabilities_greater_than_one():
+    """
+    Testing for errors with invalid probabilities greater than one.
     """
     try:
         err_str = {"p_value": [0.5,3,.02]}
@@ -246,6 +256,11 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_probabilities_less_than_zero():
+    """
+    Testing for errors with invalid negative probabilities.
+    """
+
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
         p_plot((err_str), 0, 0.01)
@@ -254,6 +269,10 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_alpha_less_than_zero():
+    """
+    Testing for errors with invalid negative alpha.
+    """
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_plot((err_str), 0, -.01)
@@ -262,6 +281,10 @@ def test_p_plot_errors():
     else:
         assert False
 
+def test_p_plot_errors_alpha_greater_than_one():
+    """
+    Testing for errors with invalid alpha greater than one.
+    """
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_plot((err_str), 0, 3)
@@ -270,25 +293,28 @@ def test_p_plot_errors():
     else:
         assert False
 
-def test_p_plot():
+# -----------------------------------------------------------------------------
+# Integration tests
+# -----------------------------------------------------------------------------
+
+def test_p_plot_integration_test():
     """
-    The purpose of this test is evaluating if the matplotlib object created with p_plot has the correct layers compared to the required
-    plot. The test will cover the same things we checked with R:
-
-    - The output is a matplotlib object.
-    - The axis labels are correct. In this case if the labels are "p(k)" and "k".
-    - The chart type used is correct. In this case, if it is a scatter plot combined with two lines.
-    - The series used for plotting are the correct ones. "pvalue" and "k".
-
-    ## We couldn't find a way to extract information from the axes on the matplotlib object. With R, everything is stored
-    ## on a list. We will get deeper this week to solve this issue and add the test announced before.
+    Integration test using the p_plot function with p_methods as input.
     """
-
-    # error string col index of dataframe contains character values
     try:
-        err_str = {"p_value": ['str']}
-        p_adjust((err_str), 0, "bonf", 0.05)
-    except(TypeError):
-        assert True
-    else:
+        p_plot(p_methods(list(np.linspace(0.01,1,30))))
+    except(SyntaxError):
         assert False
+    else:
+        assert True
+
+def test_p_qq_integration_test():
+    """
+    Integration test using the p_qq function with p_methods as input.
+    """
+    try:
+        p_qq(p_methods(list(np.linspace(0.01,1,30))))
+    except(SyntaxError):
+        assert False
+    else:
+        assert True
