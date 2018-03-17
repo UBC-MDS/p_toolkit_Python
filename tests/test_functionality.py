@@ -369,13 +369,13 @@ def test_p_plot_integration_test():
     else:
         assert True
 
-# def test_p_qq_integration_test():
-#     """
-#     Integration test using the p_qq function with p_methods as input.
-#     """
-#     try:
-#         p_qq(p_methods(list(np.linspace(0.01,1,30))))
-#     except(SyntaxError):
-#         assert False
-#     else:
-#         assert True
+def test_p_qq_integration_test():
+    """
+    Integration test using the p_qq function with p_methods as input.
+    """
+    try:
+        p_qq(p_methods(data=[0.01], alpha=0.05))
+    except(SyntaxError):
+        assert False
+    else:
+        assert True
