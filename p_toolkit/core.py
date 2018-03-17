@@ -117,14 +117,14 @@ def p_adjust(data, pv_index=0, method='bonf', alpha=0.05):
     df["bh_pvalue"] = df['p_value'] / df["rank"]  * m
 
 
-    if method == 'bh' or method == 'fdr':
+    if method == 'bh' or method == 'fdr' or method=='BH':
         df["adjusted"] = df['p_value'] /  df["rank"] * m
         return (df[['p_value', 'adjusted']])
-    if method == 'bonf' or method == 'bonferroni':
+    if method == 'bonf' or method == 'bonferroni' or method == 'Bonferroni':
         df["adjusted"] = df['p_value'] * m
         return (df[['p_value', 'adjusted']])
     else:
-        raise ValueError("Method should be set as 'bonf' or 'bh' corrections")
+        raise ValueError("Method should be specified as either 'Bonferroni' or 'BH'.")
 
 
 def p_plot(data,pv_index=0,alpha=0.05):
