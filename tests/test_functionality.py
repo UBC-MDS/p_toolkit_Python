@@ -12,34 +12,55 @@ sys.path.insert(0, os.path.abspath("../p_toolkit"))
 from core import *
 
 
-###Functionality tests
+# -----------------------------------------------------------------------------
+# p_adjust tests
+# -----------------------------------------------------------------------------
 
-###p_adjust functionality
-def test_p_adjust():
+def test_p_adjust_vector_1_value_bonf():
     """
-    The purpose of this test is evaluating the p_adjust with more real world data using Pandas dataframes under
-    different environments.
+    Testing p_adjust with a vector of 1 value and using bonferroni method.
     """
 
-    ##basic vector functionality"
     d = {"p_value": [0.07], "adjusted": [0.07]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07], method="bonf")), "p_adjust 1 values vector for bonferoni"
+
+def test_p_adjust_vector_1_value_bh():
+    """
+    Testing p_adjust with a vector of 1 value and using bh method.
+    """
+
+    d = {"p_value": [0.07], "adjusted": [0.07]}
+    df = pd.DataFrame(data=d)
+    df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07], method="bh")), "p_adjust 1 values vector for bh"
 
+def test_p_adjust_vector_2_values_bonf():
+    """
+    Testing p_adjust with a vector of 2 values and using bonferroni method.
+    """
 
     d = {"p_value": [0.07, 0.2], "adjusted": [0.14, 0.4]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07, 0.2], method="bonf")), "p_adjust 2 values vector for bonferoni"
 
+def test_p_adjust_vector_2_values_bh():
+    """
+    Testing p_adjust with a vector of 2 values and using bh method.
+    """
+
     d = {"p_value": [0.07, 0.2], "adjusted": [0.14, 0.2]}
     df = pd.DataFrame(data=d)
     df = df[["p_value", "adjusted"]]
     assert df.equals(p_adjust(data=[0.07, 0.2], method="bh")), "p_adjust 2 values vector value for bh"
 
-    # error string col index of dataframe contains character values
+def test_p_adjust_character_col_index():
+    """
+    Testing for error string when col index of dataframe contains character values
+    """
+
     try:
         err_str = {"p_value": ['str']}
         p_adjust((err_str), 0, "bonf", 0.05)
@@ -52,6 +73,7 @@ def test_p_adjust_errors_probabilities_greater_than_one():
     """
     Testing for errors with invalid probabilities greater than one
     """
+
     try:
         err_str = {"p_value": [0.5,3,.02]}
         p_adjust((err_str), 0, "bonf", 0.05)
@@ -64,6 +86,7 @@ def test_p_adjust_errors_probabilities_less_than_zero():
     """
     Testing for errors with invalid negative probabilities
     """
+
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
         p_adjust((err_str), 0, "bh", 0.05)
@@ -80,6 +103,7 @@ def test_p_methods_errors_probabilities_greater_than_one():
     """
     Testing for errors with invalid probabilities greater than one.
     """
+
     try:
         err_str = {"p_value": [0.5,3,.02]}
         p_methods((err_str), 0, 0.01)
@@ -92,6 +116,7 @@ def test_p_methods_errors_probabilities_less_than_zero():
     """
     Testing for errors with invalid probabilities less than zero.
     """
+
     try:
         err_str = {"p_value": [0.5,.3,-.02]}
         p_methods((err_str), 0, 0.01)
@@ -117,6 +142,7 @@ def test_p_methods_errors_alpha_greater_than_one():
     """
     Testing for errors with invalid alpha greater than one.
     """
+
     try:
         err_str = {"p_value": [0.5,.3,.02]}
         p_methods((err_str), 0, 3)
@@ -129,6 +155,7 @@ def test_p_methods_1_value_vector_false_signficance():
     """
     Testing 1 value vector as input for p_methods with false significance.
     """
+
     d = {"p_value": [0.07], "bonf_value": [0.05], "bonf_significant": [False], "bh_value": [0.05],
          "bh_significant": [False]}
     df = pd.DataFrame(data=d)
