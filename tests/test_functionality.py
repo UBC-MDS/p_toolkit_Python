@@ -16,6 +16,21 @@ from core import *
 # p_adjust tests
 # -----------------------------------------------------------------------------
 
+def test_p_qq_errors_probabilities_greater_than_one():
+    """
+    Testing for entering an invalid string as a method.
+    """
+
+    try:
+         d = {"p_value": [0.07], "adjusted": [0.07]}
+        df = pd.DataFrame(data=d)
+        err_str = "bonferronu"
+        p_adjust(df, 0, method=err_str, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
 def test_p_adjust_vector_1_value_bonf():
     """
     Testing p_adjust with a vector of 1 value and using bonferroni method.
