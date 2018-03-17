@@ -24,7 +24,7 @@ def test_p_adjust_wrong_method_string():
     try:
         d = {"p_value": [0.07], "adjusted": [0.07]}
         df = pd.DataFrame(data=d)
-        p_adjust(df, method="bonferronu", 0.01)
+        p_adjust(df, method="bonferronu")
     except(ValueError):
         assert True
     else:
