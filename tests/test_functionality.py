@@ -201,27 +201,27 @@ def test_p_methods():
     else:
         assert False
 
-###Plotting tests
+##Plotting tests
 
-# def test_p_qq_errors():
-#     """
-#     Testing for errors with invalid probabilities
-#     """
-#     try:
-#         err_str = {"p_value": [0.5,3,.02]}
-#         p_qq((err_str), 0, 0.01)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
-#
-#     try:
-#         err_str = {"p_value": [0.5,.3,-.02]}
-#         p_qq((err_str), 0, 0.01)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
+def test_p_qq_errors():
+    """
+    Testing for errors with invalid probabilities
+    """
+    try:
+        err_str = {"p_value": [0.5,3,.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_qq((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
 
 def test_p_qq():
     """
@@ -246,41 +246,41 @@ def test_p_qq():
     else:
         assert False
 
-# def test_p_plot_errors():
-#     """
-#     Testing for errors with invalid probabilities
-#     """
-#     try:
-#         err_str = {"p_value": [0.5,3,.02]}
-#         p_plot((err_str), 0, 0.01)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
-#
-#     try:
-#         err_str = {"p_value": [0.5,.3,-.02]}
-#         p_plot((err_str), 0, 0.01)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
-#
-#     try:
-#         err_str = {"p_value": [0.5,.3,.02]}
-#         p_plot((err_str), 0, -.01)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
-#
-#     try:
-#         err_str = {"p_value": [0.5,.3,.02]}
-#         p_plot((err_str), 0, 3)
-#     except(TypeError):
-#         assert True
-#     else:
-#         assert False
+def test_p_plot_errors():
+    """
+    Testing for errors with invalid probabilities
+    """
+    try:
+        err_str = {"p_value": [0.5,3,.02]}
+        p_plot((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+    try:
+        err_str = {"p_value": [0.5,.3,-.02]}
+        p_plot((err_str), 0, 0.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+    try:
+        err_str = {"p_value": [0.5,.3,.02]}
+        p_plot((err_str), 0, -.01)
+    except(TypeError):
+        assert True
+    else:
+        assert False
+
+    try:
+        err_str = {"p_value": [0.5,.3,.02]}
+        p_plot((err_str), 0, 3)
+    except(TypeError):
+        assert True
+    else:
+        assert False
 
 def test_p_plot():
     """
