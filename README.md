@@ -56,20 +56,6 @@ We can use the p-values alone, or an adjustment method such as the Bonferroni  o
 
 This package aims to combine these methods in a simple-to-use format, which works by outputting dataframes, which contain results from several adjustment methods.
 
-### Package Functions
-The following table gives a high level overview of the proposed functions in `p_toolkit`.
-
-| Functions    | Description                                         | Inputs                           | Outputs                                               |
-|--------------|-----------------------------------------------------|----------------------------------|-------------------------------------------------------|
-| `p_methods`  | Bonferroni, BH summary of adjusted pvals            | df/vector, p-value column, alpha | DATAFRAME<br> variable, raw pval, adjusted pvals      |
-| `p_adjust`   | Correction method specific output                   | df/vector, p-value column, alpha | raw pval, adjusted pval, Significance, Critical value |
-| `p_plot`     | Summary plot comparing methods (sample from DSCI553 Lecture 2)       | `p_methods` dataframe                  | ![](doc/pictures/sample-p_plot.PNG)![](doc/pictures/sample-p_plot-zoom.PNG) |
-| `p_qq`       | qq plot labeling per method the significant pvals   |      `p_methods` dataframe                                     |  ![](doc/pictures/sample-p_qq.PNG)![](doc/pictures/sample-p_qq-zoom.PNG) |
-| *`p_matrix`  | Confusion matrix with FDR (reverse of type I error) |         _TBD_                              |                             _TBD_                          |
-| *`p_summary` | Summary listing  FDR rate                           |        _TBD_                               |                                            _TBD_                |
-
- \* Bonus functions for data with labels
-
 
 ## Install
 
@@ -205,10 +191,14 @@ A plot displaying the p-values and both Bonferroni and Benjamini-Hochberg method
 ```
 p_plot(data)
 ```
+
+![](doc/pictures/plot1.png)
+
 A simple QQ-plot of the p-values:
 ```
 p_qq(data,pv_index)
 ```
+![](doc/pictures/plot2.png)
 
 ## Credits
 
